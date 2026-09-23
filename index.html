@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LYFAds Bengaluru | Video Production & Full-Funnel Digital Marketing Agency</title>
+  <meta name="description" content="Bengaluru's premier creative ad production house and full-funnel performance marketing agency. Cinema-grade ad films, 3D CGI, SEO, AI automation, and high-ROI growth campaigns.">
+  <meta name="keywords" content="LYFAds Bengaluru, Digital Marketing Agency Bangalore, Video Production Bangalore, Performance Marketing, SEO, AI Automation, 3D Motion Graphics">
+  <meta property="og:title" content="LYFAds Bengaluru - Creative Video Production & Digital Growth">
+  <meta property="og:description" content="Where cinema-grade ad production meets algorithmic 10x digital marketing scale.">
+  <meta property="og:type" content="website">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              purple: '#8b5cf6',
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              dark: '#07090e',
+              card: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Custom Stylesheet with Optical Illusions & Glassmorphism -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-[#07090e] text-slate-100 antialiased selection:bg-purple-600 selection:text-white">
+
+  <!-- Toast Alerts Container -->
+  <div id="toast-container"></div>
+
+  <!-- Navigation Bar -->
+  <header id="main-nav" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo Branding -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/25 group-hover:scale-105 transition duration-300">
+          <i class="fa-solid fa-play text-white text-sm ml-0.5"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-black font-heading tracking-tight text-white flex items-center gap-1.5">
+            LYF<span class="text-purple-400">Ads</span>
+            <span class="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">BLR</span>
+          </span>
+          <span class="text-[10px] text-slate-400 tracking-wider uppercase font-medium">Bengaluru Studio</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="index.html" data-page="index.html" class="text-slate-300 hover:text-white transition duration-200">Home & Services</a>
+        <a href="about.html" data-page="about.html" class="text-slate-300 hover:text-white transition duration-200">About & Case Studies</a>
+        <a href="contact.html" data-page="contact.html" class="text-slate-300 hover:text-white transition duration-200">Contact & Admin CRM</a>
+      </nav>
+
+      <!-- Desktop Action CTA -->
+      <div class="hidden md:flex items-center gap-4">
+        <button onclick="openServiceModal('General Growth Consultation', 'Connect with our Bengaluru Strategy Leads')" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex items-center gap-2">
+          <span>Get Free Audit</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
+        <i class="fa-solid fa-bars-staggered text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden glass-nav border-t border-white/5 px-4 pt-3 pb-6 space-y-3">
+      <a href="index.html" data-page="index.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">Home & Services</a>
+      <a href="about.html" data-page="about.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">About & Case Studies</a>
+      <a href="contact.html" data-page="contact.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">Contact & Admin CRM</a>
+      <button onclick="openServiceModal('General Growth Consultation', 'Connect with our Bengaluru Strategy Leads')" class="w-full btn-primary py-3 rounded-xl text-sm font-semibold text-white text-center mt-2">
+        Get Free Audit
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section with Canvas Particle Optical Illusion -->
+  <section class="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden">
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Ambient Glow Orbs -->
+    <div class="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none animate-glow"></div>
+    <div class="absolute bottom-1/4 right-1/4 translate-x-1/3 translate-y-1/3 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none animate-glow" style="animation-delay: -3s;"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <!-- High-Impact Badge -->
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/80 border border-purple-500/30 text-purple-300 text-xs sm:text-sm font-semibold mb-6 shadow-inner backdrop-blur-md">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span>Bengaluru's Elite Creative Ad & Growth House</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-heading text-white tracking-tight leading-[1.1] mb-6">
+        Where High-End Ad Production Meets <br class="hidden sm:inline" />
+        <span class="gradient-text">10x Digital Growth</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="max-w-3xl mx-auto text-base sm:text-xl text-slate-300 font-normal leading-relaxed mb-10">
+        LYFAds Bengaluru crafts feature-grade commercial films, viral reels, and algorithmic full-funnel digital marketing campaigns engineered to scale tech startups, D2C disruptors, and global enterprises.
+      </p>
+
+      <!-- Hero CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+        <a href="#services-grid" class="btn-primary w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-white shadow-xl shadow-purple-600/20 flex items-center justify-center gap-2 text-base">
+          <span>Explore 20 Core Services</span>
+          <i class="fa-solid fa-arrow-down text-xs"></i>
+        </a>
+        <button onclick="openServiceModal('Full Funnel Growth Blueprint', 'Custom strategy session with our Bengaluru Creative Directors')" class="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-slate-500 transition duration-200 flex items-center justify-center gap-2 text-base backdrop-blur">
+          <i class="fa-solid fa-calendar-check text-purple-400"></i>
+          <span>Book Strategy Call</span>
+        </button>
+      </div>
+
+      <!-- Trust & Scale Metrics Strip -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div class="glass-panel p-4 sm:p-5 rounded-2xl border border-white/5 text-center">
+          <div class="text-2xl sm:text-3xl font-black font-heading text-white kpi-counter" data-target="150" data-prefix="₹" data-suffix="Cr+">₹0Cr+</div>
+          <div class="text-xs text-slate-400 font-medium mt-1">Managed Ad Spend</div>
+        </div>
+        <div class="glass-panel p-4 sm:p-5 rounded-2xl border border-white/5 text-center">
+          <div class="text-2xl sm:text-3xl font-black font-heading text-purple-400 kpi-counter" data-target="450" data-suffix="+">0+</div>
+          <div class="text-xs text-slate-400 font-medium mt-1">Campaigns Delivered</div>
+        </div>
+        <div class="glass-panel p-4 sm:p-5 rounded-2xl border border-white/5 text-center">
+          <div class="text-2xl sm:text-3xl font-black font-heading text-cyan-400 kpi-counter" data-target="18.4" data-suffix="x" data-decimal="true">0x</div>
+          <div class="text-xs text-slate-400 font-medium mt-1">Peak Recorded ROAS</div>
+        </div>
+        <div class="glass-panel p-4 sm:p-5 rounded-2xl border border-white/5 text-center">
+          <div class="text-2xl sm:text-3xl font-black font-heading text-emerald-400 kpi-counter" data-target="99.4" data-suffix="%" data-decimal="true">0%</div>
+          <div class="text-xs text-slate-400 font-medium mt-1">Client Retention Rate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive 20 Services Grid Section -->
+  <section id="services-grid" class="py-24 relative bg-slate-950/60 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <i class="fa-solid fa-shapes"></i> Full-Service Digital Marketing Agency
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-black font-heading text-white tracking-tight mb-4">
+          20 Digital Marketing & Creative Disciplines
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+          From viral commercial film direction in our Bengaluru studio to deep-funnel algorithmic media buying and AI automation agents. Every card opens a direct consultation channel.
+        </p>
+      </div>
+
+      <!-- Filters & Live Search Bar -->
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-slate-800/80">
+        <!-- Category Filter Tabs -->
+        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto" id="service-filters">
+          <button data-filter="all" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition active bg-purple-600 text-white shadow-lg shadow-purple-500/25">
+            All (20)
+          </button>
+          <button data-filter="paid-growth" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 transition">
+            Paid & Growth
+          </button>
+          <button data-filter="content-creative" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 transition">
+            Content & Video
+          </button>
+          <button data-filter="tech-ai" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 transition">
+            Tech & AI
+          </button>
+          <button data-filter="strategy-sales" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 transition">
+            Strategy & Sales
+          </button>
+        </div>
+
+        <!-- Live Instant Search Input -->
+        <div class="relative w-full md:w-72">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+          <input type="text" id="service-search" placeholder="Search 20 services..." class="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition">
+        </div>
+      </div>
+
+      <!-- Services Cards Grid Container -->
+      <div id="services-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Injected via JavaScript from SERVICES_DATA -->
+      </div>
+
+      <!-- Empty State Indicator -->
+      <div id="services-empty-state" class="hidden text-center py-16">
+        <i class="fa-solid fa-magnifying-glass text-4xl text-slate-600 mb-3"></i>
+        <h4 class="text-lg font-bold text-white">No matching services found</h4>
+        <p class="text-sm text-slate-400 mt-1">Try another search term or click 'All' to reset.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive ROI & Ad Spend Calculator Section -->
+  <section class="py-20 relative overflow-hidden bg-slate-900/40 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <!-- Left Calculator Controls -->
+          <div class="lg:col-span-7 space-y-8">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold uppercase mb-2">
+                <i class="fa-solid fa-calculator"></i> Growth Intelligence
+              </div>
+              <h3 class="text-2xl sm:text-4xl font-bold font-heading text-white">
+                Project Your Bengaluru Growth & ROAS
+              </h3>
+              <p class="text-slate-400 text-sm mt-1">
+                Simulate your expected return on marketing spend powered by LYFAds performance frameworks.
+              </p>
+            </div>
+
+            <!-- Ad Spend Slider -->
+            <div class="space-y-3">
+              <div class="flex justify-between items-center text-sm font-semibold">
+                <span class="text-slate-300">Monthly Marketing Budget:</span>
+                <span id="spend-display" class="text-xl font-bold text-purple-400 font-heading">₹5,00,000</span>
+              </div>
+              <input type="range" id="spend-slider" min="100000" max="5000000" step="50000" value="500000" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500">
+              <div class="flex justify-between text-[11px] text-slate-500 font-medium">
+                <span>₹1 Lakh</span>
+                <span>₹25 Lakhs</span>
+                <span>₹50 Lakhs</span>
+              </div>
+            </div>
+
+            <!-- Conversion Rate Slider -->
+            <div class="space-y-3">
+              <div class="flex justify-between items-center text-sm font-semibold">
+                <span class="text-slate-300">Target Funnel Conversion:</span>
+                <span id="conv-display" class="text-xl font-bold text-cyan-400 font-heading">3.5%</span>
+              </div>
+              <input type="range" id="conv-slider" min="1.0" max="10.0" step="0.5" value="3.5" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+              <div class="flex justify-between text-[11px] text-slate-500 font-medium">
+                <span>1.0% (Cold Industry Avg)</span>
+                <span>3.5% (LYFAds Baseline)</span>
+                <span>10.0% (Optimized SaaS)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Projection Summary Box -->
+          <div class="lg:col-span-5 bg-slate-950/80 p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-6">
+            <h4 class="text-xs uppercase font-bold tracking-wider text-slate-400 flex items-center justify-between">
+              <span>Audited 90-Day Projections</span>
+              <span class="text-emerald-400 font-bold text-xs"><i class="fa-solid fa-chart-line mr-1"></i> High Confidence</span>
+            </h4>
+
+            <div class="space-y-4">
+              <div class="flex justify-between items-center pb-3 border-b border-slate-800/80">
+                <span class="text-sm text-slate-400">Projected Qualified Leads:</span>
+                <span id="proj-leads" class="text-xl font-bold text-white font-heading">245 Leads</span>
+              </div>
+              <div class="flex justify-between items-center pb-3 border-b border-slate-800/80">
+                <span class="text-sm text-slate-400">Target Acquisition Cost (CAC):</span>
+                <span id="proj-cac" class="text-xl font-bold text-emerald-400 font-heading">₹2,040</span>
+              </div>
+              <div class="flex justify-between items-center pb-3 border-b border-slate-800/80">
+                <span class="text-sm text-slate-400">Est. Pipeline Revenue:</span>
+                <span id="proj-revenue" class="text-2xl font-black text-cyan-400 font-heading">₹24,50,000</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-slate-400">Projected Campaign ROAS:</span>
+                <span id="proj-roas" class="text-2xl font-black gradient-text font-heading">4.9x ROAS</span>
+              </div>
+            </div>
+
+            <button onclick="openServiceModal('ROI Calculator Blueprint', 'Based on ₹' + document.getElementById('spend-slider').value + ' budget projection')" class="btn-primary w-full py-3.5 rounded-xl font-bold text-white shadow-xl flex items-center justify-center gap-2 text-sm">
+              <span>Unlock Custom Action Plan</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Testimonials & Trust Carousel Grid -->
+  <section class="py-20 bg-slate-950 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs uppercase font-bold tracking-widest text-indigo-400">Verified Testimonials</span>
+        <h2 class="text-3xl font-extrabold font-heading text-white mt-1">Trusted by Silicon Valley of India Founders</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col justify-between">
+          <p class="text-sm text-slate-300 italic mb-6 leading-relaxed">
+            "LYFAds took our B2B SaaS demo bookings from 30/mo to over 130/mo within 75 days. Their 3D explainer videos paired with algorithmic LinkedIn media buying was a game-changer."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center font-bold text-white text-sm">KS</div>
+            <div>
+              <div class="text-sm font-bold text-white">Kunal Singhania</div>
+              <div class="text-xs text-slate-400">Chief Growth Officer, ScaleCloud AI</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col justify-between">
+          <p class="text-sm text-slate-300 italic mb-6 leading-relaxed">
+            "Their video production quality in the Bengaluru studio is Cannes-grade. We generated ₹2.4Cr GMV in our first 30 days of festive ad campaigns on Meta and Instagram Reels."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 flex items-center justify-center font-bold text-white text-sm">AS</div>
+            <div>
+              <div class="text-sm font-bold text-white">Ananya Sharma</div>
+              <div class="text-xs text-slate-400">Founder, Aura Athletics Indiranagar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col justify-between">
+          <p class="text-sm text-slate-300 italic mb-6 leading-relaxed">
+            "The 3D photorealistic architectural renders they built for our Whitefield luxury villas sold out our entire 42-villa inventory before physical construction was even completed."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-500 flex items-center justify-center font-bold text-white text-sm">DC</div>
+            <div>
+              <div class="text-sm font-bold text-white">Deepak Chawla</div>
+              <div class="text-xs text-slate-400">VP Marketing, Palm Greens Realty</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Footer -->
+  <footer class="bg-[#030712] border-t border-slate-900 py-16 text-slate-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+      
+      <!-- Brand & Studio Info -->
+      <div class="space-y-4 md:col-span-1">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center text-white text-xs font-bold">LA</div>
+          <span class="text-lg font-black font-heading text-white">LYF<span class="text-purple-400">Ads</span></span>
+        </a>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Bengaluru's premier visual design studio and full-funnel digital growth agency.
+        </p>
+        <div class="text-xs text-slate-500 space-y-1">
+          <p><i class="fa-solid fa-location-dot text-purple-400 mr-1.5"></i> Koramangala 5th Block, Bengaluru, KA 560095</p>
+          <p><i class="fa-solid fa-envelope text-cyan-400 mr-1.5"></i> hello@lyfads.com</p>
+          <p><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> +91 80 4965 3200</p>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3 font-heading">Portal Pages</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="index.html" class="hover:text-purple-400 transition">Home & 20 Services Grid</a></li>
+          <li><a href="about.html" class="hover:text-purple-400 transition">About Bengaluru Studio</a></li>
+          <li><a href="about.html#case-studies" class="hover:text-purple-400 transition">Case Studies Portfolio</a></li>
+          <li><a href="contact.html" class="hover:text-purple-400 transition">Contact Us & Consultation</a></li>
+          <li><a href="contact.html?tab=admin" class="hover:text-cyan-400 transition">Enterprise Admin CRM</a></li>
+        </ul>
+      </div>
+
+      <!-- Core Disciplines -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3 font-heading">Key Capabilities</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#services-grid" class="hover:text-purple-400 transition">Paid Media & Performance Ads</a></li>
+          <li><a href="#services-grid" class="hover:text-purple-400 transition">Cinematic Video & Ad Films</a></li>
+          <li><a href="#services-grid" class="hover:text-purple-400 transition">AI SDR Bots & Automation</a></li>
+          <li><a href="#services-grid" class="hover:text-purple-400 transition">3D CGI & Motion Design</a></li>
+          <li><a href="#services-grid" class="hover:text-purple-400 transition">Technical SEO & Programmatic</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter / Direct Connect -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3 font-heading">Bengaluru Growth Dispatch</h4>
+        <p class="text-xs text-slate-400 mb-3">Weekly teardowns of high-converting ads and growth playbooks.</p>
+        <form onsubmit="event.preventDefault(); showToast('Subscribed to Bengaluru Growth Dispatch!', 'success'); this.reset();" class="space-y-2">
+          <input type="email" required placeholder="founder@company.com" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500">
+          <button type="submit" class="btn-primary w-full py-2 rounded-lg text-xs font-semibold text-white">
+            Subscribe Free
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+      <p>© 2026 LYFAds Bengaluru. All rights reserved. Open-Source Enterprise Architecture.</p>
+      <div class="flex items-center gap-4">
+        <a href="https://www.lyfads.com/" target="_blank" rel="noopener" class="hover:text-slate-400 transition">Official Global Reference</a>
+        <span>•</span>
+        <a href="contact.html?tab=admin" class="hover:text-indigo-400 transition">Admin Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll-to-Top Button -->
+  <button id="scroll-to-top" aria-label="Scroll to top" class="fixed bottom-6 right-6 z-30 p-3 rounded-full bg-purple-600/90 text-white shadow-xl hover:bg-purple-500 transition opacity-0 pointer-events-none">
+    <i class="fa-solid fa-arrow-up text-sm"></i>
+  </button>
+
+  <!-- Core Shared Scripts -->
+  <script src="assets/js/storage-service.js"></script>
+  <script src="assets/js/services-data.js"></script>
+  <script src="assets/js/modals.js"></script>
+  <script src="assets/js/illusions.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <!-- Page-Specific Controller: 20 Services Grid & ROI Calculator -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      'use strict';
+
+      const container = document.getElementById('services-cards-container');
+      const emptyState = document.getElementById('services-empty-state');
+      const searchInput = document.getElementById('service-search');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+
+      let currentCategory = 'all';
+      let currentQuery = '';
+
+      // Render 20 Service Cards
+      function renderServices() {
+        const services = window.SERVICES_DATA || [];
+        let filtered = services;
+
+        if (currentCategory !== 'all') {
+          filtered = filtered.filter(s => s.category === currentCategory);
+        }
+
+        if (currentQuery) {
+          const q = currentQuery.toLowerCase();
+          filtered = filtered.filter(s => 
+            s.title.toLowerCase().includes(q) || 
+            s.shortDesc.toLowerCase().includes(q) ||
+            s.deliverables.some(d => d.toLowerCase().includes(q))
+          );
+        }
+
+        if (filtered.length === 0) {
+          container.innerHTML = '';
+          emptyState.classList.remove('hidden');
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+        container.innerHTML = filtered.map(service => `
+          <div class="tilt-card glass-panel p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-purple-500/40 group transition duration-300">
+            <div>
+              <div class="flex justify-between items-start mb-4">
+                <div class="w-12 h-12 rounded-xl bg-purple-600/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition duration-300">
+                  <i class="${service.icon}"></i>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-800/80 text-purple-300 border border-purple-500/20">
+                  ${service.badge}
+                </span>
+              </div>
+
+              <h3 class="text-lg font-bold font-heading text-white group-hover:text-purple-300 transition duration-200 mb-2">
+                ${service.title}
+              </h3>
+
+              <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                ${service.shortDesc}
+              </p>
+
+              <!-- Deliverable Tags -->
+              <div class="flex flex-wrap gap-1.5 mb-5">
+                ${service.deliverables.slice(0, 3).map(d => `
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-slate-900/90 text-slate-400 border border-slate-800">
+                    ${d}
+                  </span>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800/70 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Target Impact</span>
+                <span class="text-xs font-bold text-emerald-400">${service.kpi}</span>
+              </div>
+              <button onclick="openServiceModal('${service.title.replace(/'/g, "\\'")}', '${service.shortDesc.replace(/'/g, "\\'")}')" class="px-3.5 py-1.5 rounded-lg bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/30 text-xs font-semibold transition duration-200 flex items-center gap-1.5">
+                <span>Enquire</span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        // Re-bind 3D tilt optics
+        if (window.initTiltCards) window.initTiltCards();
+      }
+
+      // Filter Button Clicks
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-purple-600', 'text-white', 'shadow-lg');
+            b.classList.add('bg-slate-900', 'text-slate-300');
+          });
+          btn.classList.add('bg-purple-600', 'text-white', 'shadow-lg');
+          btn.classList.remove('bg-slate-900', 'text-slate-300');
+          currentCategory = btn.getAttribute('data-filter') || 'all';
+          renderServices();
+        });
+      });
+
+      // Search input handler
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          currentQuery = e.target.value.trim();
+          renderServices();
+        });
+      }
+
+      // Initial Render
+      renderServices();
+
+      // ==========================================
+      // Interactive ROI & Ad Spend Calculator
+      // ==========================================
+      const spendSlider = document.getElementById('spend-slider');
+      const convSlider = document.getElementById('conv-slider');
+      const spendDisplay = document.getElementById('spend-display');
+      const convDisplay = document.getElementById('conv-display');
+      const projLeads = document.getElementById('proj-leads');
+      const projCac = document.getElementById('proj-cac');
+      const projRevenue = document.getElementById('proj-revenue');
+      const projRoas = document.getElementById('proj-roas');
+
+      function calculateROI() {
+        const spend = parseFloat(spendSlider.value);
+        const conv = parseFloat(convSlider.value);
+
+        spendDisplay.textContent = '₹' + spend.toLocaleString('en-IN');
+        convDisplay.textContent = conv.toFixed(1) + '%';
+
+        // Assumed cost per click (CPC) benchmark in India
+        const avgCpc = 32; 
+        const totalClicks = spend / avgCpc;
+        const leads = Math.max(1, Math.round(totalClicks * (conv / 100)));
+        const calculatedCac = Math.round(spend / leads);
+
+        // Assumed client deal value multiplier
+        const avgDealValue = 45000;
+        const closeRate = 0.22; // 22% deal close rate
+        const estimatedRevenue = Math.round(leads * closeRate * avgDealValue);
+        const calculatedRoas = (estimatedRevenue / spend).toFixed(1);
+
+        projLeads.textContent = `${leads.toLocaleString('en-IN')} Leads`;
+        projCac.textContent = `₹${calculatedCac.toLocaleString('en-IN')}`;
+        projRevenue.textContent = `₹${estimatedRevenue.toLocaleString('en-IN')}`;
+        projRoas.textContent = `${calculatedRoas}x ROAS`;
+      }
+
+      if (spendSlider && convSlider) {
+        spendSlider.addEventListener('input', calculateROI);
+        convSlider.addEventListener('input', calculateROI);
+        calculateROI();
+      }
+    });
+  </script>
+</body>
+</html>

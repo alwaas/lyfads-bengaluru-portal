@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us & Admin Lead CRM | LYFAds Bengaluru</title>
+  <meta name="description" content="Contact LYFAds Bengaluru for bespoke creative ad production, video shoots, and performance marketing. Includes real-time Enterprise Admin Lead Dashboard.">
+  <meta property="og:title" content="Contact LYFAds Bengaluru & Enterprise Lead CRM">
+  <meta property="og:description" content="Book a strategy consultation or manage live agency leads in real-time.">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              purple: '#8b5cf6',
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              dark: '#07090e',
+              card: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-[#07090e] text-slate-100 antialiased selection:bg-purple-600 selection:text-white">
+
+  <!-- Toast Alerts Container -->
+  <div id="toast-container"></div>
+
+  <!-- Navigation Bar -->
+  <header id="main-nav" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo Branding -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/25 group-hover:scale-105 transition duration-300">
+          <i class="fa-solid fa-play text-white text-sm ml-0.5"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-black font-heading tracking-tight text-white flex items-center gap-1.5">
+            LYF<span class="text-purple-400">Ads</span>
+            <span class="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">BLR</span>
+          </span>
+          <span class="text-[10px] text-slate-400 tracking-wider uppercase font-medium">Bengaluru Studio</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="index.html" data-page="index.html" class="text-slate-300 hover:text-white transition duration-200">Home & Services</a>
+        <a href="about.html" data-page="about.html" class="text-slate-300 hover:text-white transition duration-200">About & Case Studies</a>
+        <a href="contact.html" data-page="contact.html" class="text-slate-300 hover:text-white transition duration-200">Contact & Admin CRM</a>
+      </nav>
+
+      <!-- Desktop Action CTA -->
+      <div class="hidden md:flex items-center gap-4">
+        <button onclick="switchTab('admin')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-2">
+          <i class="fa-solid fa-lock text-purple-400"></i>
+          <span>Admin Portal</span>
+          <span id="nav-leads-badge" class="px-1.5 py-0.2 rounded-full text-[10px] bg-purple-600 text-white font-bold">5</span>
+        </button>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
+        <i class="fa-solid fa-bars-staggered text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden glass-nav border-t border-white/5 px-4 pt-3 pb-6 space-y-3">
+      <a href="index.html" data-page="index.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">Home & Services</a>
+      <a href="about.html" data-page="about.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">About & Case Studies</a>
+      <a href="contact.html" data-page="contact.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">Contact & Admin CRM</a>
+      <button onclick="switchTab('admin')" class="w-full py-3 rounded-xl bg-purple-600/30 text-purple-300 border border-purple-500/40 text-sm font-semibold text-center mt-2 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-lock"></i>
+        <span>Switch to Admin CRM</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Mode Switcher / Segmented Tabs -->
+  <section class="pt-32 pb-6 bg-slate-950/40 border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h1 id="page-mode-title" class="text-2xl sm:text-3xl font-extrabold font-heading text-white">
+            Connect With Bengaluru Studio
+          </h1>
+          <p id="page-mode-subtitle" class="text-xs sm:text-sm text-slate-400 mt-1">
+            Schedule a high-impact creative & performance strategy session.
+          </p>
+        </div>
+
+        <!-- Mode Toggle Tabs -->
+        <div class="inline-flex p-1.5 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
+          <button id="tab-btn-contact" onclick="switchTab('contact')" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition active bg-purple-600 text-white shadow-lg shadow-purple-500/25 flex items-center gap-2">
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+            <span>Public Contact Form</span>
+          </button>
+          <button id="tab-btn-admin" onclick="switchTab('admin')" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-xs text-purple-400"></i>
+            <span>Admin Lead CRM</span>
+            <span id="tab-leads-count" class="px-2 py-0.5 rounded-full text-[10px] bg-slate-800 text-purple-300 font-bold">5</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       VIEW 1: PUBLIC CONTACT & CONSULTATION EXPERIENCE
+       ======================================================== -->
+  <main id="view-contact" class="py-16 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <!-- Left Column: High-Conversion Validated Form -->
+        <div class="lg:col-span-7">
+          <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-white/10 relative shadow-2xl">
+            <div class="mb-6">
+              <span class="text-xs font-bold uppercase tracking-wider text-purple-400">Direct Consultation</span>
+              <h2 class="text-2xl sm:text-3xl font-bold font-heading text-white mt-1">
+                Tell Us About Your Brand
+              </h2>
+              <p class="text-xs text-slate-400 mt-1">
+                Fill out the form below. Our creative directors and media buyers will review your accounts and respond within 2 hours.
+              </p>
+            </div>
+
+            <form id="public-contact-form" class="space-y-4" data-rendered-at="">
+              <!-- Honeypot Anti-Spam Hidden Field -->
+              <input type="text" name="hp_contact_field" style="display:none !important;" tabindex="-1" autocomplete="off">
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Full Name *</label>
+                  <input type="text" name="fullName" required placeholder="e.g. Vikramaditya Rao" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Work Email Address *</label>
+                  <input type="email" name="email" required placeholder="vikram@company.com" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Contact Phone Number *</label>
+                  <input type="tel" name="phone" required placeholder="+91 98450 12345" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Company / Brand Name *</label>
+                  <input type="text" name="company" required placeholder="e.g. Apex Omnichannel" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Primary Service Required *</label>
+                  <select name="service" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    <option value="Performance Marketing & Paid Ads">Performance Marketing & Paid Ads</option>
+                    <option value="Commercial Video & Creative Ad Film Production">Commercial Video & Ad Film Production</option>
+                    <option value="AI Automation & Workflow Bots">AI Automation & Workflow Bots</option>
+                    <option value="3D Motion Graphics & VFX">3D Motion Graphics & VFX</option>
+                    <option value="Search Engine Optimization (SEO)">Search Engine Optimization (SEO)</option>
+                    <option value="B2B Sales Acceleration & BD">B2B Sales Acceleration & BD</option>
+                    <option value="Customer Support & Retention CRM">Customer Support & Retention CRM</option>
+                    <option value="Social Media Management & Virality">Social Media Management & Virality</option>
+                    <option value="Conversion Rate Optimization (CRO)">Conversion Rate Optimization (CRO)</option>
+                    <option value="E-Commerce & Marketplace Growth">E-Commerce & Marketplace Growth</option>
+                    <option value="Full-Funnel Agency Retainer">Full-Funnel Agency Retainer (All-in-One)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Monthly Ad/Project Budget</label>
+                  <select name="budget" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    <option value="₹2.5L - ₹5L / month">₹2.5L - ₹5L / month</option>
+                    <option value="₹5L - ₹10L / month" selected>₹5L - ₹10L / month</option>
+                    <option value="₹10L - ₹25L / month">₹10L - ₹25L / month</option>
+                    <option value="₹25L+ / month">₹25L+ / month (Enterprise)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5">Project Scope & Objectives</label>
+                <textarea name="message" rows="4" placeholder="Detail your current CAC, conversion targets, desired deliverables, and current bottlenecks..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition"></textarea>
+              </div>
+
+              <div class="pt-3">
+                <button type="submit" class="btn-primary w-full py-4 px-8 rounded-xl font-bold text-white shadow-xl flex items-center justify-center gap-2 text-base">
+                  <span>Submit Consultation Request</span>
+                  <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+                <div class="flex items-center justify-center gap-4 text-xs text-slate-500 mt-3">
+                  <span><i class="fa-solid fa-lock text-emerald-400 mr-1"></i> 256-Bit Encrypted Form</span>
+                  <span>•</span>
+                  <span><i class="fa-solid fa-clock text-cyan-400 mr-1"></i> < 2hr SLA Response</span>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right Column: Studio Coordinates & Live Direct Connect -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Direct Connect Card -->
+          <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/5 space-y-6">
+            <h3 class="text-xl font-bold font-heading text-white">Direct Connect Channels</h3>
+            
+            <div class="space-y-4">
+              <a href="https://wa.me/918049653200?text=Hi%20LYFAds%20Bengaluru%20Team%2C%20I%20would%20like%20to%20discuss%20a%20marketing%20project." target="_blank" rel="noopener" class="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 hover:border-emerald-400 flex items-center justify-between group transition duration-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+                    <i class="fa-brands fa-whatsapp"></i>
+                  </div>
+                  <div>
+                    <div class="text-sm font-bold text-white">Instant WhatsApp Chat</div>
+                    <div class="text-xs text-slate-400">Direct link to Strategy Desk</div>
+                  </div>
+                </div>
+                <i class="fa-solid fa-arrow-right text-xs text-emerald-400 group-hover:translate-x-1 transition"></i>
+              </a>
+
+              <a href="tel:+918049653200" class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/50 flex items-center justify-between group transition duration-200">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-phone"></i>
+                  </div>
+                  <div>
+                    <div class="text-sm font-bold text-white">Call Bengaluru Studio</div>
+                    <div class="text-xs text-slate-400">+91 80 4965 3200</div>
+                  </div>
+                </div>
+                <i class="fa-solid fa-arrow-right text-xs text-purple-400 group-hover:translate-x-1 transition"></i>
+              </a>
+
+              <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-location-dot"></i>
+                  </div>
+                  <div>
+                    <div class="text-sm font-bold text-white">Studio Physical Location</div>
+                    <div class="text-xs text-slate-400">Koramangala 5th Block, Bengaluru</div>
+                  </div>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed pl-13">
+                  Near Sony World Signal, 80 Feet Road. Operating hours: Monday - Saturday, 9:30 AM - 7:30 PM IST.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Accordion -->
+          <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/5 space-y-4">
+            <h4 class="text-base font-bold font-heading text-white mb-2">Frequently Asked Questions</h4>
+            
+            <div class="space-y-3">
+              <details class="group bg-slate-900/50 p-3.5 rounded-xl border border-slate-800 text-xs">
+                <summary class="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>How quickly can campaigns go live?</span>
+                  <i class="fa-solid fa-chevron-down text-[10px] group-open:rotate-180 transition"></i>
+                </summary>
+                <p class="text-slate-400 mt-2.5 leading-relaxed">
+                  For performance marketing & paid media, campaigns go live within 5-7 business days after access handover. Video productions take 10-14 days from script signoff to final color grade.
+                </p>
+              </details>
+
+              <details class="group bg-slate-900/50 p-3.5 rounded-xl border border-slate-800 text-xs">
+                <summary class="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Do you work on performance retainers?</span>
+                  <i class="fa-solid fa-chevron-down text-[10px] group-open:rotate-180 transition"></i>
+                </summary>
+                <p class="text-slate-400 mt-2.5 leading-relaxed">
+                  Yes, for qualifying scaleups and e-commerce brands spending ₹5L+/month, we offer hybrid retainer + rev-share models aligned directly with ROAS and revenue targets.
+                </p>
+              </details>
+
+              <details class="group bg-slate-900/50 p-3.5 rounded-xl border border-slate-800 text-xs">
+                <summary class="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Can we visit the Bengaluru studio?</span>
+                  <i class="fa-solid fa-chevron-down text-[10px] group-open:rotate-180 transition"></i>
+                </summary>
+                <p class="text-slate-400 mt-2.5 leading-relaxed">
+                  Absolutely! We host founders and CMOs regularly for live script reads, studio shoot supervision, and growth workshops in our Koramangala facility.
+                </p>
+              </details>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================
+       VIEW 2: ENTERPRISE ADMIN LEAD DASHBOARD CRM
+       ======================================================== -->
+  <main id="view-admin" class="py-12 relative hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      
+      <!-- Admin Security Unlock Modal / Banner (Demo Mode) -->
+      <div id="admin-passcode-gate" class="glass-panel p-8 rounded-3xl border border-purple-500/30 max-w-md mx-auto text-center space-y-4">
+        <div class="w-14 h-14 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-2xl mx-auto">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h3 class="text-2xl font-bold font-heading text-white">Enter Admin Passcode</h3>
+        <p class="text-xs text-slate-400">
+          Enter demo passcode <code class="text-purple-300 font-mono bg-purple-950/50 px-2 py-0.5 rounded">admin123</code> or click instant demo unlock.
+        </p>
+
+        <form id="admin-auth-form" class="space-y-3">
+          <input type="password" id="admin-passcode-input" placeholder="Enter admin123" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-center text-white focus:outline-none focus:border-purple-500">
+          <div class="flex gap-2">
+            <button type="submit" class="btn-primary flex-1 py-2.5 rounded-xl font-semibold text-xs text-white">
+              Authenticate
+            </button>
+            <button type="button" onclick="unlockAdminDemo()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 border border-slate-700 transition">
+              Quick Demo Unlock
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Authenticated Admin Workspace -->
+      <div id="admin-workspace" class="hidden space-y-8">
+        
+        <!-- Top Analytics KPI Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div class="glass-panel p-5 rounded-2xl border border-white/5">
+            <div class="text-xs font-semibold uppercase text-slate-400">Total Leads</div>
+            <div id="stat-total" class="text-2xl sm:text-3xl font-black font-heading text-white mt-1">0</div>
+            <div class="text-[10px] text-slate-500 mt-1">All time in CRM</div>
+          </div>
+
+          <div class="glass-panel p-5 rounded-2xl border border-indigo-500/20 bg-indigo-950/10">
+            <div class="text-xs font-semibold uppercase text-indigo-400">New Leads</div>
+            <div id="stat-new" class="text-2xl sm:text-3xl font-black font-heading text-indigo-300 mt-1">0</div>
+            <div class="text-[10px] text-indigo-400/80 mt-1">Pending first contact</div>
+          </div>
+
+          <div class="glass-panel p-5 rounded-2xl border border-amber-500/20 bg-amber-950/10">
+            <div class="text-xs font-semibold uppercase text-amber-400">In Progress</div>
+            <div id="stat-progress" class="text-2xl sm:text-3xl font-black font-heading text-amber-300 mt-1">0</div>
+            <div class="text-[10px] text-amber-400/80 mt-1">Active negotiation</div>
+          </div>
+
+          <div class="glass-panel p-5 rounded-2xl border border-emerald-500/20 bg-emerald-950/10">
+            <div class="text-xs font-semibold uppercase text-emerald-400">Closed / Won</div>
+            <div id="stat-closed" class="text-2xl sm:text-3xl font-black font-heading text-emerald-300 mt-1">0</div>
+            <div class="text-[10px] text-emerald-400/80 mt-1">Signed retainer deals</div>
+          </div>
+
+          <div class="glass-panel p-5 rounded-2xl border border-cyan-500/20 bg-cyan-950/10 col-span-2 md:col-span-1">
+            <div class="text-xs font-semibold uppercase text-cyan-400">Est. Pipeline</div>
+            <div id="stat-pipeline" class="text-xl sm:text-2xl font-black font-heading text-cyan-300 mt-1">₹0</div>
+            <div class="text-[10px] text-cyan-400/80 mt-1">Weighted budget value</div>
+          </div>
+        </div>
+
+        <!-- CRM Toolbar & Data Management -->
+        <div class="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
+          
+          <!-- Filters & Search -->
+          <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+            <div class="relative w-full sm:w-60">
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+              <input type="text" id="admin-search" placeholder="Search leads, company, phone..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500">
+            </div>
+
+            <select id="admin-status-filter" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500">
+              <option value="all">All Statuses</option>
+              <option value="New Lead">New Lead</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+
+          <!-- Export & Data Action Buttons -->
+          <div class="flex items-center gap-2.5 w-full md:w-auto justify-end">
+            <button onclick="exportCRMData('csv')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5 shadow">
+              <i class="fa-solid fa-file-csv text-emerald-400"></i>
+              <span>Export CSV</span>
+            </button>
+            <button onclick="exportCRMData('json')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5 shadow">
+              <i class="fa-solid fa-file-code text-cyan-400"></i>
+              <span>Export JSON</span>
+            </button>
+            <button onclick="resetDefaultLeads()" title="Restore sample Bengaluru leads" class="p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-700 text-xs transition">
+              <i class="fa-solid fa-rotate text-xs"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Leads Table Container -->
+        <div class="glass-panel rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="bg-slate-900/90 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
+                <tr>
+                  <th class="p-4">Date</th>
+                  <th class="p-4">Prospect & Company</th>
+                  <th class="p-4">Contact Info</th>
+                  <th class="p-4">Service & Budget</th>
+                  <th class="p-4">Status Workflow</th>
+                  <th class="p-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-leads-tbody" class="divide-y divide-slate-800/60">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State -->
+          <div id="admin-table-empty" class="hidden text-center py-16">
+            <i class="fa-solid fa-inbox text-4xl text-slate-600 mb-3"></i>
+            <h4 class="text-base font-bold text-white">No leads match your criteria</h4>
+            <p class="text-xs text-slate-400 mt-1">Try clearing your search query or reset seed data.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Lead Detail Modal for Admin -->
+  <div id="lead-detail-modal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+    <div class="modal-container glass-panel w-full max-w-lg rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl space-y-6">
+      <div class="flex justify-between items-start">
+        <div>
+          <span id="detail-lead-status-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+            New Lead
+          </span>
+          <h3 id="detail-lead-name" class="text-2xl font-bold font-heading text-white mt-1.5">Prospect Name</h3>
+          <p id="detail-lead-company" class="text-xs text-purple-400 font-semibold">Company Name</p>
+        </div>
+        <button onclick="closeLeadDetailModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800/50 hover:bg-slate-800 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
+        <div class="flex justify-between py-1 border-b border-slate-800/50">
+          <span class="text-slate-400">Email:</span>
+          <span id="detail-lead-email" class="text-white font-medium select-all"></span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-slate-800/50">
+          <span class="text-slate-400">Phone:</span>
+          <span id="detail-lead-phone" class="text-white font-medium select-all"></span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-slate-800/50">
+          <span class="text-slate-400">Service:</span>
+          <span id="detail-lead-service" class="text-white font-medium"></span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-slate-800/50">
+          <span class="text-slate-400">Budget:</span>
+          <span id="detail-lead-budget" class="text-emerald-400 font-bold"></span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-slate-800/50">
+          <span class="text-slate-400">Timeline:</span>
+          <span id="detail-lead-timeline" class="text-white font-medium"></span>
+        </div>
+        <div class="flex justify-between py-1">
+          <span class="text-slate-400">Lead Source:</span>
+          <span id="detail-lead-source" class="text-purple-300 font-medium"></span>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Project Message & Requirements</h4>
+        <div id="detail-lead-message" class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-300 leading-relaxed whitespace-pre-wrap"></div>
+      </div>
+
+      <!-- Quick Contact Actions -->
+      <div class="flex gap-2.5 pt-2">
+        <a id="detail-lead-mailto" href="#" class="btn-primary py-2.5 px-4 rounded-xl font-semibold text-xs text-white text-center flex-1 flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-envelope"></i> Send Email
+        </a>
+        <a id="detail-lead-tel" href="#" class="py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold text-xs text-white text-center flex-1 flex items-center justify-center gap-1.5 transition">
+          <i class="fa-solid fa-phone"></i> Call Phone
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Footer -->
+  <footer class="bg-[#030712] border-t border-slate-900 py-16 text-slate-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+      
+      <!-- Brand & Studio Info -->
+      <div class="space-y-4 md:col-span-1">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center text-white text-xs font-bold">LA</div>
+          <span class="text-lg font-black font-heading text-white">LYF<span class="text-purple-400">Ads</span></span>
+        </a>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Bengaluru's premier visual design studio and full-funnel digital growth agency.
+        </p>
+        <div class="text-xs text-slate-500 space-y-1">
+          <p><i class="fa-solid fa-location-dot text-purple-400 mr-1.5"></i> Koramangala 5th Block, Bengaluru, KA 560095</p>
+          <p><i class="fa-solid fa-envelope text-cyan-400 mr-1.5"></i> hello@lyfads.com</p>
+          <p><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> +91 80 4965 3200</p>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3 font-heading">Portal Pages</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="index.html" class="hover:text-purple-400 transition">Home & 20 Services Grid</a></li>
+          <li><a href="about.html" class="hover:text-purple-400 transition">About Bengaluru Studio</a></li>
+          <li><a href="about.html#case-studies" class="hover:text-purple-400 transition">Case Studies Portfolio</a></li>
+          <li><a href="contact.html" class="hover:text-purple-400 transition">Contact Us & Consultation</a></li>
+          <li><a href="contact.html?tab=admin" class="hover:text-cyan-400 transition">Enterprise Admin CRM</a></li>
+        </ul>
+      </div>
+
+      <!-- Core Disciplines -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3 font-heading">Key Capabilities</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">Paid Media & Performance Ads</a></li>
+          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">Cinematic Video & Ad Films</a></li>
+          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">AI SDR Bots & Automation</a></li>
+          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">3D CGI & Motion Design</a></li>
+          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">Technical SEO & Programmatic</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter / Direct Connect -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3 font-heading">Bengaluru Growth Dispatch</h4>
+        <p class="text-xs text-slate-400 mb-3">Weekly teardowns of high-converting ads and growth playbooks.</p>
+        <form onsubmit="event.preventDefault(); showToast('Subscribed to Bengaluru Growth Dispatch!', 'success'); this.reset();" class="space-y-2">
+          <input type="email" required placeholder="founder@company.com" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500">
+          <button type="submit" class="btn-primary w-full py-2 rounded-lg text-xs font-semibold text-white">
+            Subscribe Free
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+      <p>© 2026 LYFAds Bengaluru. All rights reserved. Open-Source Enterprise Architecture.</p>
+      <div class="flex items-center gap-4">
+        <a href="https://www.lyfads.com/" target="_blank" rel="noopener" class="hover:text-slate-400 transition">Official Global Reference</a>
+        <span>•</span>
+        <button onclick="switchTab('admin')" class="hover:text-indigo-400 transition">Admin Portal</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core Shared Scripts -->
+  <script src="assets/js/storage-service.js"></script>
+  <script src="assets/js/modals.js"></script>
+  <script src="assets/js/illusions.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <!-- Contact & Admin Lead CRM Controller -->
+  <script>
+    let currentTab = 'contact';
+    let isAdminUnlocked = false;
+
+    // Switch between Public Contact View and Admin CRM Portal
+    function switchTab(tab) {
+      currentTab = tab;
+      const viewContact = document.getElementById('view-contact');
+      const viewAdmin = document.getElementById('view-admin');
+      const btnContact = document.getElementById('tab-btn-contact');
+      const btnAdmin = document.getElementById('tab-btn-admin');
+      const title = document.getElementById('page-mode-title');
+      const subtitle = document.getElementById('page-mode-subtitle');
+
+      if (tab === 'admin') {
+        viewContact.classList.add('hidden');
+        viewAdmin.classList.remove('hidden');
+        btnAdmin.classList.add('bg-purple-600', 'text-white', 'shadow-lg');
+        btnAdmin.classList.remove('text-slate-400');
+        btnContact.classList.remove('bg-purple-600', 'text-white', 'shadow-lg');
+        btnContact.classList.add('text-slate-400');
+
+        title.textContent = 'Enterprise Admin Lead CRM';
+        subtitle.textContent = 'Real-time pipeline monitoring, status workflows, and export management.';
+
+        checkAdminAuth();
+      } else {
+        viewAdmin.classList.add('hidden');
+        viewContact.classList.remove('hidden');
+        btnContact.classList.add('bg-purple-600', 'text-white', 'shadow-lg');
+        btnContact.classList.remove('text-slate-400');
+        btnAdmin.classList.remove('bg-purple-600', 'text-white', 'shadow-lg');
+        btnAdmin.classList.add('text-slate-400');
+
+        title.textContent = 'Connect With Bengaluru Studio';
+        subtitle.textContent = 'Schedule a high-impact creative & performance strategy session.';
+      }
+    }
+
+    // Admin Auth
+    function checkAdminAuth() {
+      const gate = document.getElementById('admin-passcode-gate');
+      const workspace = document.getElementById('admin-workspace');
+      
+      if (sessionStorage.getItem('lyfads_admin_session') === 'true' || isAdminUnlocked) {
+        gate.classList.add('hidden');
+        workspace.classList.remove('hidden');
+        renderAdminDashboard();
+      } else {
+        gate.classList.remove('hidden');
+        workspace.classList.add('hidden');
+      }
+    }
+
+    function unlockAdminDemo() {
+      sessionStorage.setItem('lyfads_admin_session', 'true');
+      isAdminUnlocked = true;
+      checkAdminAuth();
+      showToast('Admin session authenticated successfully.', 'success');
+    }
+
+    // Export Handler
+    function exportCRMData(type) {
+      if (!window.lyfadsStorage) return;
+      if (type === 'csv') {
+        window.lyfadsStorage.exportToCSV();
+        showToast('Exported leads to CSV.', 'success');
+      } else {
+        window.lyfadsStorage.exportToJSON();
+        showToast('Exported leads snapshot to JSON.', 'success');
+      }
+    }
+
+    // Reset default seed leads
+    function resetDefaultLeads() {
+      if (confirm('Reset CRM to default Bengaluru seed leads?')) {
+        window.lyfadsStorage.resetToDefaults();
+        renderAdminDashboard();
+        showToast('Reset to default seed leads.', 'info');
+      }
+    }
+
+    // Render Admin CRM Table & Analytics
+    function renderAdminDashboard() {
+      if (!window.lyfadsStorage) return;
+
+      const leads = window.lyfadsStorage.getLeads();
+      const analytics = window.lyfadsStorage.getAnalytics();
+
+      // Update KPI counters
+      document.getElementById('stat-total').textContent = analytics.total;
+      document.getElementById('stat-new').textContent = analytics.newLeads;
+      document.getElementById('stat-progress').textContent = analytics.inProgress;
+      document.getElementById('stat-closed').textContent = analytics.closed;
+      document.getElementById('stat-pipeline').textContent = '₹' + (analytics.pipelineEstimate / 100000).toFixed(1) + 'L';
+
+      // Update badge counters
+      const navBadge = document.getElementById('nav-leads-badge');
+      const tabBadge = document.getElementById('tab-leads-count');
+      if (navBadge) navBadge.textContent = analytics.total;
+      if (tabBadge) tabBadge.textContent = analytics.total;
+
+      const searchInput = document.getElementById('admin-search');
+      const statusFilter = document.getElementById('admin-status-filter');
+      const query = (searchInput?.value || '').toLowerCase().trim();
+      const statusVal = statusFilter?.value || 'all';
+
+      let filtered = leads;
+      if (statusVal !== 'all') {
+        filtered = filtered.filter(l => l.status === statusVal);
+      }
+      if (query) {
+        filtered = filtered.filter(l => 
+          l.fullName.toLowerCase().includes(query) ||
+          l.company.toLowerCase().includes(query) ||
+          l.email.toLowerCase().includes(query) ||
+          l.phone.toLowerCase().includes(query) ||
+          l.service.toLowerCase().includes(query)
+        );
+      }
+
+      const tbody = document.getElementById('admin-leads-tbody');
+      const emptyState = document.getElementById('admin-table-empty');
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      tbody.innerHTML = filtered.map(lead => {
+        let statusBadgeClass = 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40';
+        if (lead.status === 'In Progress') statusBadgeClass = 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+        if (lead.status === 'Closed') statusBadgeClass = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+
+        const dateStr = new Date(lead.createdAt).toLocaleDateString('en-IN', {
+          day: 'numeric',
+          month: 'short',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
+        return `
+          <tr class="hover:bg-slate-800/40 transition">
+            <td class="p-4 whitespace-nowrap text-slate-400 font-mono text-[11px]">
+              ${dateStr}
+            </td>
+            <td class="p-4">
+              <div class="font-bold text-white text-sm">${lead.fullName}</div>
+              <div class="text-xs text-purple-400 font-semibold">${lead.company}</div>
+            </td>
+            <td class="p-4">
+              <div class="text-slate-300 select-all">${lead.email}</div>
+              <div class="text-slate-400 select-all font-mono text-[11px]">${lead.phone}</div>
+            </td>
+            <td class="p-4">
+              <div class="text-white font-medium">${lead.service}</div>
+              <div class="text-[11px] text-emerald-400 font-bold">${lead.budget}</div>
+            </td>
+            <td class="p-4">
+              <select onchange="updateLeadWorkflow('${lead.id}', this.value)" class="bg-slate-900 border text-xs rounded-lg px-2.5 py-1 font-semibold focus:outline-none ${statusBadgeClass}">
+                <option value="New Lead" ${lead.status === 'New Lead' ? 'selected' : ''}>New Lead</option>
+                <option value="In Progress" ${lead.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                <option value="Closed" ${lead.status === 'Closed' ? 'selected' : ''}>Closed</option>
+              </select>
+            </td>
+            <td class="p-4 text-right whitespace-nowrap space-x-2">
+              <button onclick="inspectLead('${lead.id}')" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition" title="Inspect Lead">
+                <i class="fa-solid fa-eye text-xs"></i>
+              </button>
+              <button onclick="removeLead('${lead.id}')" class="p-1.5 rounded-lg bg-slate-800 hover:bg-rose-900/60 text-slate-400 hover:text-rose-400 transition" title="Delete Lead">
+                <i class="fa-solid fa-trash text-xs"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Lead Status Workflow Update
+    function updateLeadWorkflow(id, newStatus) {
+      if (window.lyfadsStorage) {
+        window.lyfadsStorage.updateLeadStatus(id, newStatus);
+        showToast(`Lead status updated to '${newStatus}'.`, 'info');
+      }
+    }
+
+    // Delete Lead
+    function removeLead(id) {
+      if (confirm('Permanently delete this lead?')) {
+        if (window.lyfadsStorage) {
+          window.lyfadsStorage.deleteLead(id);
+          showToast('Lead deleted from CRM.', 'info');
+        }
+      }
+    }
+
+    // Inspect Lead Modal
+    function inspectLead(id) {
+      if (!window.lyfadsStorage) return;
+      const lead = window.lyfadsStorage.getLeadById(id);
+      if (!lead) return;
+
+      document.getElementById('detail-lead-name').textContent = lead.fullName;
+      document.getElementById('detail-lead-company').textContent = lead.company;
+      document.getElementById('detail-lead-status-badge').textContent = lead.status;
+      document.getElementById('detail-lead-email').textContent = lead.email;
+      document.getElementById('detail-lead-phone').textContent = lead.phone;
+      document.getElementById('detail-lead-service').textContent = lead.service;
+      document.getElementById('detail-lead-budget').textContent = lead.budget;
+      document.getElementById('detail-lead-timeline').textContent = lead.timeline;
+      document.getElementById('detail-lead-source').textContent = lead.source || 'Website Contact Form';
+      document.getElementById('detail-lead-message').textContent = lead.message || 'No specific notes provided.';
+
+      document.getElementById('detail-lead-mailto').href = `mailto:${lead.email}?subject=LYFAds%20Bengaluru%20-%20Follow-up%20on%20${encodeURIComponent(lead.service)}`;
+      document.getElementById('detail-lead-tel').href = `tel:${lead.phone}`;
+
+      const modal = document.getElementById('lead-detail-modal');
+      modal.classList.remove('hidden');
+    }
+
+    function closeLeadDetailModal() {
+      const modal = document.getElementById('lead-detail-modal');
+      modal.classList.add('hidden');
+    }
+
+    // Public Contact Form Handler
+    document.addEventListener('DOMContentLoaded', () => {
+      'use strict';
+
+      const contactForm = document.getElementById('public-contact-form');
+      if (contactForm) {
+        contactForm.dataset.renderedAt = Date.now().toString();
+
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          // Anti-Spam Check 1: Honeypot
+          if (contactForm.hp_contact_field && contactForm.hp_contact_field.value.trim() !== '') {
+            console.warn('Bot detected via honeypot.');
+            showToast('Submission error.', 'error');
+            return;
+          }
+
+          // Anti-Spam Check 2: Submission Velocity (< 2.0s is automated script)
+          const rendered = parseInt(contactForm.dataset.renderedAt || '0', 10);
+          if (Date.now() - rendered < 2000) {
+            showToast('Submission too fast. Please verify details.', 'error');
+            return;
+          }
+
+          const formData = new FormData(contactForm);
+          const fullName = formData.get('fullName')?.toString().trim();
+          const email = formData.get('email')?.toString().trim();
+          const phone = formData.get('phone')?.toString().trim();
+          const company = formData.get('company')?.toString().trim();
+
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            showToast('Please provide a valid business email address.', 'error');
+            return;
+          }
+
+          if (phone.length < 8) {
+            showToast('Please provide a valid contact phone number.', 'error');
+            return;
+          }
+
+          const lead = {
+            fullName,
+            email,
+            phone,
+            company,
+            service: formData.get('service')?.toString() || 'General Consultation',
+            budget: formData.get('budget')?.toString() || '₹5L - ₹10L / month',
+            timeline: 'Immediate',
+            message: formData.get('message')?.toString() || '',
+            source: 'Contact Page Form'
+          };
+
+          if (window.lyfadsStorage) {
+            window.lyfadsStorage.saveLead(lead);
+            showToast('Inquiry submitted! Our Bengaluru team will connect within 2 hours.', 'success');
+            contactForm.reset();
+            contactForm.dataset.renderedAt = Date.now().toString();
+          }
+        });
+      }
+
+      // Admin Auth Form
+      const authForm = document.getElementById('admin-auth-form');
+      if (authForm) {
+        authForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const pwd = document.getElementById('admin-passcode-input').value.trim();
+          if (pwd === 'admin123') {
+            unlockAdminDemo();
+          } else {
+            showToast('Invalid passcode. Use admin123.', 'error');
+          }
+        });
+      }
+
+      // Real-time Event Subscriptions
+      window.addEventListener('lyfads:lead_created', () => {
+        renderAdminDashboard();
+      });
+      window.addEventListener('lyfads:lead_updated', () => {
+        renderAdminDashboard();
+      });
+      window.addEventListener('lyfads:lead_deleted', () => {
+        renderAdminDashboard();
+      });
+
+      // Filter & Search input bindings
+      const adminSearch = document.getElementById('admin-search');
+      const adminFilter = document.getElementById('admin-status-filter');
+      if (adminSearch) adminSearch.addEventListener('input', renderAdminDashboard);
+      if (adminFilter) adminFilter.addEventListener('change', renderAdminDashboard);
+
+      // Check URL Query Param: ?tab=admin
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('tab') === 'admin') {
+        switchTab('admin');
+      } else {
+        // Update badge counts initially
+        if (window.lyfadsStorage) {
+          const analytics = window.lyfadsStorage.getAnalytics();
+          const navBadge = document.getElementById('nav-leads-badge');
+          const tabBadge = document.getElementById('tab-leads-count');
+          if (navBadge) navBadge.textContent = analytics.total;
+          if (tabBadge) tabBadge.textContent = analytics.total;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

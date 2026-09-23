@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us & Case Studies | LYFAds Bengaluru</title>
+  <meta name="description" content="Discover LYFAds Bengaluru - the agency merging cinematic commercial video production with algorithmic full-funnel digital marketing. Explore our audited case studies and 5-step growth framework.">
+  <meta property="og:title" content="About LYFAds Bengaluru & Audited Case Studies">
+  <meta property="og:description" content="Explore audited portfolio case studies across SaaS unicorns, D2C brands, and FinTech leaders in Bengaluru.">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              purple: '#8b5cf6',
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              dark: '#07090e',
+              card: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-[#07090e] text-slate-100 antialiased selection:bg-purple-600 selection:text-white">
+
+  <!-- Toast Alerts Container -->
+  <div id="toast-container"></div>
+
+  <!-- Navigation Bar -->
+  <header id="main-nav" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo Branding -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/25 group-hover:scale-105 transition duration-300">
+          <i class="fa-solid fa-play text-white text-sm ml-0.5"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-black font-heading tracking-tight text-white flex items-center gap-1.5">
+            LYF<span class="text-purple-400">Ads</span>
+            <span class="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">BLR</span>
+          </span>
+          <span class="text-[10px] text-slate-400 tracking-wider uppercase font-medium">Bengaluru Studio</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="index.html" data-page="index.html" class="text-slate-300 hover:text-white transition duration-200">Home & Services</a>
+        <a href="about.html" data-page="about.html" class="text-slate-300 hover:text-white transition duration-200">About & Case Studies</a>
+        <a href="contact.html" data-page="contact.html" class="text-slate-300 hover:text-white transition duration-200">Contact & Admin CRM</a>
+      </nav>
+
+      <!-- Desktop Action CTA -->
+      <div class="hidden md:flex items-center gap-4">
+        <button onclick="openServiceModal('General Growth Consultation', 'Connect with our Bengaluru Strategy Leads')" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex items-center gap-2">
+          <span>Get Free Audit</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
+        <i class="fa-solid fa-bars-staggered text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden glass-nav border-t border-white/5 px-4 pt-3 pb-6 space-y-3">
+      <a href="index.html" data-page="index.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">Home & Services</a>
+      <a href="about.html" data-page="about.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">About & Case Studies</a>
+      <a href="contact.html" data-page="contact.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">Contact & Admin CRM</a>
+      <button onclick="openServiceModal('General Growth Consultation', 'Connect with our Bengaluru Strategy Leads')" class="w-full btn-primary py-3 rounded-xl text-sm font-semibold text-white text-center mt-2">
+        Get Free Audit
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section: Agency Narrative & Positioning -->
+  <section class="relative pt-36 pb-20 overflow-hidden">
+    <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-10 left-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Headline & Introduction -->
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold mb-4">
+          <i class="fa-solid fa-building-columns"></i> Agency Profile & Philosophy
+        </div>
+        <h1 class="text-4xl sm:text-6xl font-extrabold font-heading text-white tracking-tight leading-tight mb-6">
+          The Creative & Algorithmic Growth Engine of <br class="hidden sm:inline" />
+          <span class="gradient-text">Silicon Valley of India</span>
+        </h1>
+        <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto">
+          Born in Koramangala and collaborating with disruptors across India, Southeast Asia, and Silicon Valley, LYFAds Bengaluru bridges the gap between high-end visual filmmaking and ruthless conversion mathematics.
+        </p>
+      </div>
+
+      <!-- Narrative Dual Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+        <div class="glass-panel p-8 rounded-3xl border border-white/5 space-y-4">
+          <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-film"></i>
+          </div>
+          <h3 class="text-2xl font-bold font-heading text-white">Cinematic Visual Craftsmanship</h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Most digital agencies make boring Canva graphics and generic stock reels that users scroll past in 0.4 seconds. At LYFAds Bengaluru, our dedicated production studio shoots with cinema-grade RED/ARRI cameras, produces custom 3D CGI simulations, and writes psychological hooks that command attention in hyper-crowded social feeds.
+          </p>
+        </div>
+
+        <div class="glass-panel p-8 rounded-3xl border border-white/5 space-y-4">
+          <div class="w-12 h-12 rounded-xl bg-cyan-600/20 text-cyan-400 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-chart-pie"></i>
+          </div>
+          <h3 class="text-2xl font-bold font-heading text-white">Full-Funnel Unit Economics</h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Stunning visuals mean nothing if CAC exceeds LTV. Our media buying and AI automation team treats your ad budget like venture capital: continuous multivariate creative testing, server-side attribution modeling, and hyper-personalized outbound SDR workflows that turn viral views into validated enterprise revenue.
+          </p>
+        </div>
+      </div>
+
+      <!-- Live Success Metrics Counters -->
+      <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-purple-500/20 bg-slate-900/50">
+        <div class="text-center max-w-2xl mx-auto mb-8">
+          <span class="text-xs uppercase font-bold tracking-wider text-purple-400">Audited Agency Metrics</span>
+          <h3 class="text-2xl sm:text-3xl font-bold font-heading text-white mt-1">Real Scale Backed by Uncompromised Data</h3>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
+          <div class="p-3">
+            <div class="text-3xl sm:text-4xl font-black font-heading text-white kpi-counter" data-target="150" data-prefix="₹" data-suffix="Cr+">₹0Cr+</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Ad Spend Managed</div>
+          </div>
+          <div class="p-3">
+            <div class="text-3xl sm:text-4xl font-black font-heading text-purple-400 kpi-counter" data-target="450" data-suffix="+">0+</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Campaigns Deployed</div>
+          </div>
+          <div class="p-3">
+            <div class="text-3xl sm:text-4xl font-black font-heading text-cyan-400 kpi-counter" data-target="18.4" data-suffix="x" data-decimal="true">0x</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Peak Recorded ROAS</div>
+          </div>
+          <div class="p-3">
+            <div class="text-3xl sm:text-4xl font-black font-heading text-emerald-400 kpi-counter" data-target="99.4" data-suffix="%" data-decimal="true">0%</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Client Retention</div>
+          </div>
+          <div class="p-3">
+            <div class="text-3xl sm:text-4xl font-black font-heading text-pink-400 kpi-counter" data-target="3.8" data-suffix="M+" data-decimal="true">0M+</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Organic Reel Views</div>
+          </div>
+          <div class="p-3">
+            <div class="text-3xl sm:text-4xl font-black font-heading text-yellow-400 kpi-counter" data-target="14" data-suffix=" Days">0 Days</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Time-to-Scale Signal</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Filterable Case Studies Portfolio Grid Section -->
+  <section id="case-studies" class="py-24 bg-slate-950/70 border-t border-white/5 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold uppercase mb-3">
+            <i class="fa-solid fa-trophy"></i> Audited Portfolio
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-black font-heading text-white tracking-tight">
+            Case Studies & Proven Impact
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base mt-2 max-w-xl">
+            Click any case study to inspect the in-depth challenge, creative angle, execution breakdown, and audited business results.
+          </p>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap gap-2" id="cs-filters">
+          <button data-cs-filter="all" class="cs-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition active bg-purple-600 text-white shadow-lg shadow-purple-500/25">
+            All (6)
+          </button>
+          <button data-cs-filter="saas" class="cs-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 transition">
+            B2B SaaS
+          </button>
+          <button data-cs-filter="d2c" class="cs-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 transition">
+            D2C Brands
+          </button>
+          <button data-cs-filter="fintech" class="cs-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 transition">
+            FinTech
+          </button>
+          <button data-cs-filter="realestate" class="cs-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 transition">
+            Real Estate
+          </button>
+        </div>
+      </div>
+
+      <!-- Case Studies Cards Container -->
+      <div id="cs-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Rendered via JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5-Step Digital Marketing Growth Framework Section -->
+  <section class="py-24 bg-slate-900/30 border-t border-white/5 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase mb-3">
+          <i class="fa-solid fa-stairs"></i> The LYFAds Methodology
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-black font-heading text-white tracking-tight">
+          Our 5-Step Growth Engine Framework
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-2">
+          A scientific, battle-tested roadmap that eliminates guesswork and delivers predictable revenue scaling.
+        </p>
+      </div>
+
+      <!-- Steps Roadmap Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-6 relative">
+        
+        <!-- Step 1 -->
+        <div class="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col justify-between relative group hover:border-purple-500/40 transition duration-300">
+          <div>
+            <div class="text-4xl font-black font-heading text-slate-800 group-hover:text-purple-500/20 transition duration-300 mb-3">01</div>
+            <div class="w-10 h-10 rounded-xl bg-purple-600/10 text-purple-400 flex items-center justify-center text-lg mb-4">
+              <i class="fa-solid fa-microscope"></i>
+            </div>
+            <h4 class="text-base font-bold font-heading text-white mb-2">Forensic ICP & Audit</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              We deconstruct your current ad accounts, unit economics, competitor messaging, and ideal customer pain points.
+            </p>
+          </div>
+          <div class="mt-6 pt-3 border-t border-slate-800 text-[11px] text-purple-300 font-semibold flex items-center gap-1">
+            <span>Duration: Week 1</span>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col justify-between relative group hover:border-cyan-500/40 transition duration-300">
+          <div>
+            <div class="text-4xl font-black font-heading text-slate-800 group-hover:text-cyan-500/20 transition duration-300 mb-3">02</div>
+            <div class="w-10 h-10 rounded-xl bg-cyan-600/10 text-cyan-400 flex items-center justify-center text-lg mb-4">
+              <i class="fa-solid fa-clapperboard"></i>
+            </div>
+            <h4 class="text-base font-bold font-heading text-white mb-2">Creative & Hook Filming</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Studio filming of 10+ high-tempo video hooks, 3D CGI product animations, and psychological landing page copy.
+            </p>
+          </div>
+          <div class="mt-6 pt-3 border-t border-slate-800 text-[11px] text-cyan-300 font-semibold flex items-center gap-1">
+            <span>Duration: Week 2</span>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col justify-between relative group hover:border-emerald-500/40 transition duration-300">
+          <div>
+            <div class="text-4xl font-black font-heading text-slate-800 group-hover:text-emerald-500/20 transition duration-300 mb-3">03</div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-600/10 text-emerald-400 flex items-center justify-center text-lg mb-4">
+              <i class="fa-solid fa-rocket"></i>
+            </div>
+            <h4 class="text-base font-bold font-heading text-white mb-2">Algorithmic Launch</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Deployment across Meta, Google PMax, LinkedIn, and YouTube with server-side CAPI tracking and automated bid rules.
+            </p>
+          </div>
+          <div class="mt-6 pt-3 border-t border-slate-800 text-[11px] text-emerald-300 font-semibold flex items-center gap-1">
+            <span>Duration: Week 3</span>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col justify-between relative group hover:border-pink-500/40 transition duration-300">
+          <div>
+            <div class="text-4xl font-black font-heading text-slate-800 group-hover:text-pink-500/20 transition duration-300 mb-3">04</div>
+            <div class="w-10 h-10 rounded-xl bg-pink-600/10 text-pink-400 flex items-center justify-center text-lg mb-4">
+              <i class="fa-solid fa-sliders"></i>
+            </div>
+            <h4 class="text-base font-bold font-heading text-white mb-2">Funnel CRO & AI Bots</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              We eliminate friction on checkout funnels and deploy 24/7 AI WhatsApp bots to qualify and nurture inbound leads instantly.
+            </p>
+          </div>
+          <div class="mt-6 pt-3 border-t border-slate-800 text-[11px] text-pink-300 font-semibold flex items-center gap-1">
+            <span>Duration: Week 4</span>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col justify-between relative group hover:border-yellow-500/40 transition duration-300">
+          <div>
+            <div class="text-4xl font-black font-heading text-slate-800 group-hover:text-yellow-500/20 transition duration-300 mb-3">05</div>
+            <div class="w-10 h-10 rounded-xl bg-yellow-600/10 text-yellow-400 flex items-center justify-center text-lg mb-4">
+              <i class="fa-solid fa-chart-line-up"></i>
+            </div>
+            <h4 class="text-base font-bold font-heading text-white mb-2">Full-Funnel Scaling</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Aggressive horizontal and vertical budget expansion, automated retention flows, and continuous creative refresh.
+            </p>
+          </div>
+          <div class="mt-6 pt-3 border-t border-slate-800 text-[11px] text-yellow-300 font-semibold flex items-center gap-1">
+            <span>Ongoing Velocity</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Callout -->
+      <div class="mt-14 text-center">
+        <button onclick="openServiceModal('Methodology Workshop', 'Book a 45-minute growth diagnostic for your company')" class="btn-primary px-8 py-3.5 rounded-xl font-bold text-white shadow-xl inline-flex items-center gap-2">
+          <span>Apply Framework to Your Brand</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Studio & Leadership Spotlight Section -->
+  <section class="py-20 bg-slate-950 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left: Studio & Gear -->
+        <div class="lg:col-span-6 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-semibold uppercase">
+            <i class="fa-solid fa-video"></i> Bengaluru Production Studio
+          </div>
+          <h3 class="text-3xl sm:text-4xl font-bold font-heading text-white">
+            Equipped for Cinematic Commercial Perfection
+          </h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Our 4,500 sq.ft creative production floor in Koramangala, Bengaluru is equipped with state-of-the-art cinema packages, cyclorama infinite backdrops, DaVinci Resolve color grading suites, and high-performance GPU render nodes for 3D CGI and synthetic AI generation.
+          </p>
+          
+          <div class="grid grid-cols-2 gap-4 pt-2">
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+              <i class="fa-solid fa-camera-retro text-purple-400 mb-2"></i>
+              <div class="text-sm font-bold text-white">6K RAW Camera Rigs</div>
+              <div class="text-xs text-slate-400">RED Digital Cinema & Sony FX9</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+              <i class="fa-solid fa-microchip text-cyan-400 mb-2"></i>
+              <div class="text-sm font-bold text-white">CGI & AI Render Nodes</div>
+              <div class="text-xs text-slate-400">NVIDIA RTX 4090 Workstations</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Studio Visit Card -->
+        <div class="lg:col-span-6">
+          <div class="glass-panel p-8 rounded-3xl border border-white/10 relative overflow-hidden">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-map-location-dot"></i>
+              </div>
+              <div>
+                <h4 class="text-lg font-bold text-white font-heading">LYFAds Bengaluru HQ</h4>
+                <p class="text-xs text-slate-400">Koramangala 5th Block, Bengaluru, Karnataka 560095</p>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-300 mb-6 leading-relaxed">
+              Located in the heart of Bengaluru's startup corridor, minutes from Forum Mall and Sony World Signal. Founders and marketing leaders are always welcome to grab filter coffee and brainstorm growth campaigns in person.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a href="contact.html" class="btn-primary py-2.5 px-5 rounded-xl font-semibold text-xs text-white text-center flex-1">
+                Schedule Studio Visit
+              </a>
+              <a href="https://wa.me/918049653200" target="_blank" rel="noopener" class="py-2.5 px-5 rounded-xl bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 font-semibold text-xs text-center transition flex-1 flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>Direct WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Global Footer -->
+  <footer class="bg-[#030712] border-t border-slate-900 py-16 text-slate-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+      
+      <!-- Brand & Studio Info -->
+      <div class="space-y-4 md:col-span-1">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center text-white text-xs font-bold">LA</div>
+          <span class="text-lg font-black font-heading text-white">LYF<span class="text-purple-400">Ads</span></span>
+        </a>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Bengaluru's premier visual design studio and full-funnel digital growth agency.
+        </p>
+        <div class="text-xs text-slate-500 space-y-1">
+          <p><i class="fa-solid fa-location-dot text-purple-400 mr-1.5"></i> Koramangala 5th Block, Bengaluru, KA 560095</p>
+          <p><i class="fa-solid fa-envelope text-cyan-400 mr-1.5"></i> hello@lyfads.com</p>
+          <p><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> +91 80 4965 3200</p>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3 font-heading">Portal Pages</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="index.html" class="hover:text-purple-400 transition">Home & 20 Services Grid</a></li>
+          <li><a href="about.html" class="hover:text-purple-400 transition">About Bengaluru Studio</a></li>
+          <li><a href="about.html#case-studies" class="hover:text-purple-400 transition">Case Studies Portfolio</a></li>
+          <li><a href="contact.html" class="hover:text-purple-400 transition">Contact Us & Consultation</a></li>
+          <li><a href="contact.html?tab=admin" class="hover:text-cyan-400 transition">Enterprise Admin CRM</a></li>
+        </ul>
+      </div>
+
+      <!-- Core Disciplines -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3 font-heading">Key Capabilities</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">Paid Media & Performance Ads</a></li>
+          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">Cinematic Video & Ad Films</a></li>
+          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">AI SDR Bots & Automation</a></li>
+          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">3D CGI & Motion Design</a></li>
+          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">Technical SEO & Programmatic</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter / Direct Connect -->
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3 font-heading">Bengaluru Growth Dispatch</h4>
+        <p class="text-xs text-slate-400 mb-3">Weekly teardowns of high-converting ads and growth playbooks.</p>
+        <form onsubmit="event.preventDefault(); showToast('Subscribed to Bengaluru Growth Dispatch!', 'success'); this.reset();" class="space-y-2">
+          <input type="email" required placeholder="founder@company.com" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500">
+          <button type="submit" class="btn-primary w-full py-2 rounded-lg text-xs font-semibold text-white">
+            Subscribe Free
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+      <p>© 2026 LYFAds Bengaluru. All rights reserved. Open-Source Enterprise Architecture.</p>
+      <div class="flex items-center gap-4">
+        <a href="https://www.lyfads.com/" target="_blank" rel="noopener" class="hover:text-slate-400 transition">Official Global Reference</a>
+        <span>•</span>
+        <a href="contact.html?tab=admin" class="hover:text-indigo-400 transition">Admin Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll-to-Top Button -->
+  <button id="scroll-to-top" aria-label="Scroll to top" class="fixed bottom-6 right-6 z-30 p-3 rounded-full bg-purple-600/90 text-white shadow-xl hover:bg-purple-500 transition opacity-0 pointer-events-none">
+    <i class="fa-solid fa-arrow-up text-sm"></i>
+  </button>
+
+  <!-- Core Shared Scripts -->
+  <script src="assets/js/storage-service.js"></script>
+  <script src="assets/js/case-studies-data.js"></script>
+  <script src="assets/js/modals.js"></script>
+  <script src="assets/js/illusions.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <!-- Case Studies Filter & Modal Inspector Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      'use strict';
+
+      const container = document.getElementById('cs-cards-container');
+      const filterBtns = document.querySelectorAll('.cs-btn');
+      let currentFilter = 'all';
+
+      function renderCaseStudies() {
+        const studies = window.getCaseStudiesByCategory ? window.getCaseStudiesByCategory(currentFilter) : (window.CASE_STUDIES_DATA || []);
+        
+        container.innerHTML = studies.map(study => `
+          <div class="tilt-card glass-panel rounded-2xl border border-white/5 overflow-hidden flex flex-col justify-between group hover:border-purple-500/40 transition duration-300">
+            <div>
+              <!-- Thumbnail Banner -->
+              <div class="relative h-48 w-full overflow-hidden">
+                <img src="${study.image}" alt="${study.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                <span class="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-950/80 text-purple-300 border border-purple-500/30 backdrop-blur">
+                  ${study.tag}
+                </span>
+              </div>
+
+              <!-- Content -->
+              <div class="p-6">
+                <div class="text-xs font-semibold text-purple-400 mb-1">${study.client}</div>
+                <h3 class="text-lg font-bold font-heading text-white group-hover:text-purple-300 transition duration-200 leading-snug mb-3">
+                  ${study.title}
+                </h3>
+                <p class="text-xs text-slate-300 leading-relaxed mb-6">
+                  ${study.summary}
+                </p>
+
+                <!-- Metrics Strip -->
+                <div class="grid grid-cols-3 gap-2 p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center mb-4">
+                  ${(study.metrics || []).map(m => `
+                    <div>
+                      <div class="text-base font-black text-white font-heading">${m.value}</div>
+                      <div class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold">${m.label}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Action -->
+            <div class="p-6 pt-0">
+              <button onclick="openCaseStudyModal('${study.id}')" class="w-full py-2.5 px-4 rounded-xl bg-slate-800/80 hover:bg-purple-600 text-slate-200 hover:text-white border border-slate-700/80 hover:border-purple-500 text-xs font-semibold transition duration-200 flex items-center justify-center gap-2">
+                <span>Inspect Full Case Study</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        if (window.initTiltCards) window.initTiltCards();
+      }
+
+      // Filter button clicks
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-purple-600', 'text-white', 'shadow-lg');
+            b.classList.add('bg-slate-900', 'text-slate-300');
+          });
+          btn.classList.add('bg-purple-600', 'text-white', 'shadow-lg');
+          btn.classList.remove('bg-slate-900', 'text-slate-300');
+          currentFilter = btn.getAttribute('data-cs-filter') || 'all';
+          renderCaseStudies();
+        });
+      });
+
+      renderCaseStudies();
+    });
+  </script>
+</body>
+</html>
