@@ -129,3 +129,4 @@ function getCaseStudiesByCategory(category) {
 // Expose globally
 window.CASE_STUDIES_DATA = CASE_STUDIES_DATA;
 window.getCaseStudiesByCategory = getCaseStudiesByCategory;
+

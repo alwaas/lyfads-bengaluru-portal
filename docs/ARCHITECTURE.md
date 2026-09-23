@@ -238,3 +238,4 @@ Each service card on `index.html` subscribes to mousemove events:
 1. **DOM Loading**: Deferred scripts (`defer`) to prevent render blocking.
 2. **GPU Acceleration**: Keyframe animations utilize `transform: translate3d(...)` and `opacity` to invoke hardware compositing layers.
 3. **Zero Dependencies**: Pure Vanilla JS ensures sub-100ms first input delay (FID) and near-perfect Largest Contentful Paint (LCP).
+

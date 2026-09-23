@@ -31,6 +31,10 @@
   <!-- FontAwesome 6 CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+  <!-- Official Favicon & App Icons -->
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="assets/images/logo-square.png">
+
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -44,8 +48,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       <!-- Logo Branding -->
       <a href="index.html" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/25 group-hover:scale-105 transition duration-300">
-          <i class="fa-solid fa-play text-white text-sm ml-0.5"></i>
+        <div class="h-11 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-white/10 hover:border-red-500/40 flex items-center justify-center shadow-lg shadow-black/40 group-hover:scale-105 transition duration-300">
+          <img src="assets/images/logo.png" alt="LYFAds Official Logo" class="h-8 w-auto object-contain filter drop-shadow-[0_0_8px_rgba(220,38,38,0.35)]">
         </div>
         <div class="flex flex-col">
           <span class="text-xl font-black font-heading tracking-tight text-white flex items-center gap-1.5">
@@ -315,8 +319,8 @@
       
       <!-- Admin Security Unlock Modal / Banner (Demo Mode) -->
       <div id="admin-passcode-gate" class="glass-panel p-8 rounded-3xl border border-purple-500/30 max-w-md mx-auto text-center space-y-4">
-        <div class="w-14 h-14 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-2xl mx-auto">
-          <i class="fa-solid fa-lock"></i>
+        <div class="h-16 px-4 py-2 rounded-2xl bg-slate-900/90 border border-white/10 flex items-center justify-center mx-auto w-fit shadow-lg shadow-black/40">
+          <img src="assets/images/logo.png" alt="LYFAds Logo" class="h-10 w-auto object-contain filter drop-shadow-[0_0_8px_rgba(220,38,38,0.4)]">
         </div>
         <h3 class="text-2xl font-bold font-heading text-white">Enter Admin Passcode</h3>
         <p class="text-xs text-slate-400">
@@ -506,9 +510,11 @@
       
       <!-- Brand & Studio Info -->
       <div class="space-y-4 md:col-span-1">
-        <a href="index.html" class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center text-white text-xs font-bold">LA</div>
-          <span class="text-lg font-black font-heading text-white">LYF<span class="text-purple-400">Ads</span></span>
+        <a href="index.html" class="flex items-center gap-2.5 group">
+          <div class="h-9 px-2 py-1 rounded-lg bg-slate-900/90 border border-white/10 flex items-center justify-center shadow">
+            <img src="assets/images/logo.png" alt="LYFAds Logo" class="h-6 w-auto object-contain filter drop-shadow-[0_0_6px_rgba(220,38,38,0.3)]">
+          </div>
+          <span class="text-lg font-black font-heading text-white group-hover:text-purple-300 transition">LYF<span class="text-purple-400">Ads</span></span>
         </a>
         <p class="text-xs text-slate-400 leading-relaxed">
           Bengaluru's premier visual design studio and full-funnel digital growth agency.
@@ -914,3 +920,4 @@
   </script>
 </body>
 </html>
+

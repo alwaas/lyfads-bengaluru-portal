@@ -72,12 +72,17 @@
     modal.innerHTML = `
       <div class="modal-container glass-panel w-full max-w-xl rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl max-h-[92vh] overflow-y-auto">
         <div class="flex justify-between items-start mb-6">
-          <div>
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-semibold mb-2">
-              <i class="fa-solid fa-bolt text-xs"></i> Express Priority Consultation
+          <div class="flex items-center gap-3.5">
+            <div class="h-12 px-2.5 py-1 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center shadow">
+              <img src="assets/images/logo.png" alt="LYFAds Logo" class="h-8 w-auto object-contain filter drop-shadow-[0_0_6px_rgba(220,38,38,0.4)]">
             </div>
-            <h3 id="modal-service-title" class="text-2xl font-bold font-heading text-white">Direct Service Enquiry</h3>
-            <p id="modal-service-subtitle" class="text-sm text-slate-400 mt-1">Connect directly with our Bengaluru strategy directors.</p>
+            <div>
+              <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-[11px] font-semibold mb-1">
+                <i class="fa-solid fa-bolt text-xs"></i> Express Priority Consultation
+              </div>
+              <h3 id="modal-service-title" class="text-xl sm:text-2xl font-bold font-heading text-white">Direct Service Enquiry</h3>
+              <p id="modal-service-subtitle" class="text-xs text-slate-400 mt-0.5">Connect directly with our Bengaluru strategy directors.</p>
+            </div>
           </div>
           <button id="close-service-modal" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800/50 hover:bg-slate-800 transition">
             <i class="fa-solid fa-xmark text-lg"></i>
@@ -275,6 +280,9 @@
           <button id="close-cs-modal" class="absolute top-4 right-4 z-10 text-white/80 hover:text-white p-2.5 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur transition">
             <i class="fa-solid fa-xmark text-lg"></i>
           </button>
+          <div class="absolute top-4 left-4 z-10 h-9 px-2.5 py-1 rounded-xl bg-slate-950/80 backdrop-blur border border-white/10 flex items-center justify-center shadow">
+            <img src="assets/images/logo.png" alt="LYFAds Logo" class="h-6 w-auto object-contain">
+          </div>
           <div class="absolute bottom-6 left-6 right-6">
             <span id="cs-modal-tag" class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/30 text-indigo-300 border border-indigo-500/40">SaaS Growth</span>
             <h3 id="cs-modal-title" class="text-2xl sm:text-3xl font-bold font-heading text-white mt-2 leading-tight">Case Study Title</h3>
@@ -395,3 +403,4 @@
   window.closeCaseStudyModal = closeCaseStudyModal;
 
 })();
+

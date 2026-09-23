@@ -235,3 +235,4 @@ function getServicesByCategory(cat) {
 // Expose globally
 window.SERVICES_DATA = SERVICES_DATA;
 window.getServicesByCategory = getServicesByCategory;
+
