@@ -174,6 +174,7 @@
                   <label class="block text-xs font-semibold text-slate-300 mb-1.5">Primary Service Required *</label>
                   <select name="service" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500 transition">
                     <option value="Performance Marketing & Paid Ads">Performance Marketing & Paid Ads</option>
+                    <option value="Brand Identity & Logo Design">Brand Identity & Logo Design</option>
                     <option value="Commercial Video & Creative Ad Film Production">Commercial Video & Ad Film Production</option>
                     <option value="AI Automation & Workflow Bots">AI Automation & Workflow Bots</option>
                     <option value="3D Motion Graphics & VFX">3D Motion Graphics & VFX</option>
@@ -902,11 +903,16 @@
       if (adminSearch) adminSearch.addEventListener('input', renderAdminDashboard);
       if (adminFilter) adminFilter.addEventListener('change', renderAdminDashboard);
 
-      // Check URL Query Param: ?tab=admin
+      // Check URL Query Param: ?tab=admin or ?service=...
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('tab') === 'admin') {
         switchTab('admin');
       } else {
+        const serviceParam = urlParams.get('service');
+        if (serviceParam && contactForm && contactForm.service) {
+          contactForm.service.value = serviceParam;
+        }
+
         // Update badge counts initially
         if (window.lyfadsStorage) {
           const analytics = window.lyfadsStorage.getAnalytics();

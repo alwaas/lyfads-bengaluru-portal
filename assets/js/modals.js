@@ -77,7 +77,7 @@
               <img src="assets/images/logo.png" alt="LYFAds Logo" class="h-8 w-auto object-contain filter drop-shadow-[0_0_6px_rgba(220,38,38,0.4)]">
             </div>
             <div>
-              <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-[11px] font-semibold mb-1">
+              <div id="modal-service-badge" class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-[11px] font-semibold mb-1">
                 <i class="fa-solid fa-bolt text-xs"></i> Express Priority Consultation
               </div>
               <h3 id="modal-service-title" class="text-xl sm:text-2xl font-bold font-heading text-white">Direct Service Enquiry</h3>
@@ -178,6 +178,8 @@
     const subEl = modal.querySelector('#modal-service-subtitle');
     const inputService = modal.querySelector('#modal-selected-service');
     const form = modal.querySelector('#service-enquiry-form');
+    const badge = modal.querySelector('#modal-service-badge');
+    const textarea = modal.querySelector('textarea[name="message"]');
 
     if (serviceName) {
       titleEl.textContent = serviceName;
@@ -185,11 +187,41 @@
     }
     if (subtitle) {
       subEl.textContent = subtitle;
+    } else {
+      subEl.textContent = 'Connect directly with our Bengaluru strategy directors.';
+    }
+
+    if (badge) {
+      badge.className = 'inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-[11px] font-semibold mb-1';
+      badge.innerHTML = '<i class="fa-solid fa-bolt text-xs"></i> Express Priority Consultation';
+    }
+    if (textarea) {
+      textarea.placeholder = "Briefly describe your objectives, target audience, and current CAC or ROAS challenges...";
     }
 
     form.dataset.renderedAt = Date.now().toString();
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+  }
+
+  function openLogoDesignModal() {
+    closeLogoLightbox();
+    openServiceModal(
+      'Brand Identity & Logo Design',
+      'Bespoke 3D Vector Logos & Brand Identity Systems crafted in Bengaluru'
+    );
+    const modal = document.getElementById('service-enquiry-modal');
+    if (modal) {
+      const badge = modal.querySelector('#modal-service-badge');
+      if (badge) {
+        badge.className = 'inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300 text-[11px] font-semibold mb-1';
+        badge.innerHTML = '<i class="fa-solid fa-pen-nib text-xs"></i> Bespoke Logo Design Inquiry';
+      }
+      const textarea = modal.querySelector('textarea[name="message"]');
+      if (textarea) {
+        textarea.placeholder = "Describe your company name, industry, desired logo style (e.g. Modern Minimalist, 3D Monogram, Mascot, Tech Emblem, Wordmark), color preferences, and brand vision...";
+      }
+    }
   }
 
   function closeServiceModal() {
@@ -467,18 +499,15 @@
             <span class="px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-cyan-300">
               <i class="fa-solid fa-chart-line text-xs mr-1 text-cyan-400"></i> 10x Performance Media
             </span>
-            <span class="px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-emerald-300">
-              <i class="fa-solid fa-robot text-xs mr-1 text-emerald-400"></i> AI Automation Bots
-            </span>
           </div>
 
           <!-- Quick Action Buttons -->
           <div class="flex flex-wrap items-center justify-center gap-3 pt-4">
-            <a href="assets/images/logo.png" download="LYFAds_Official_Logo.png" class="px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5 shadow">
-              <i class="fa-solid fa-download text-xs text-purple-400"></i>
-              <span>Download Master Logo</span>
-            </a>
-            <button onclick="closeLogoLightbox(); openServiceModal('Creative Video Production', 'Consultation with our Bengaluru Studio Directors');" class="btn-primary px-5 py-2 rounded-xl text-xs font-semibold text-white flex items-center gap-1.5 shadow-lg">
+            <button onclick="openLogoDesignModal();" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all duration-300 flex items-center gap-2 shadow-lg shadow-purple-500/25 border border-purple-400/40 group">
+              <i class="fa-solid fa-pen-nib text-xs text-purple-200 group-hover:rotate-12 transition-transform"></i>
+              <span>Get Custom Logo Designed</span>
+            </button>
+            <button onclick="closeLogoLightbox(); openServiceModal('Creative Video Production', 'Consultation with our Bengaluru Studio Directors');" class="btn-primary px-5 py-2.5 rounded-xl text-xs font-semibold text-white flex items-center gap-1.5 shadow-lg">
               <span>Book Studio Consultation</span>
               <i class="fa-solid fa-arrow-right text-[10px]"></i>
             </button>
@@ -706,6 +735,7 @@
   // Expose hooks globally
   window.showToast = showToast;
   window.openServiceModal = openServiceModal;
+  window.openLogoDesignModal = openLogoDesignModal;
   window.closeServiceModal = closeServiceModal;
   window.openCaseStudyModal = openCaseStudyModal;
   window.closeCaseStudyModal = closeCaseStudyModal;
