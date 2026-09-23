@@ -395,12 +395,141 @@
     }
   }
 
+  // ==========================================
+  // 4. Large Transparent Logo Lightbox Popup
+  // ==========================================
+  let logoHoverTimer = null;
+
+  function ensureLogoLightbox() {
+    let modal = document.getElementById('logo-lightbox-modal');
+    if (modal) return modal;
+
+    modal = document.createElement('div');
+    modal.id = 'logo-lightbox-modal';
+    modal.className = 'modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-2xl hidden transition-all duration-300';
+    modal.innerHTML = `
+      <div class="modal-container glass-panel relative w-full max-w-xl p-8 sm:p-12 rounded-3xl border border-white/15 shadow-[0_0_60px_rgba(0,0,0,0.85)] flex flex-col items-center text-center bg-slate-950/85">
+        <!-- Close button in the corner -->
+        <button id="close-logo-lightbox" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-slate-800/80 hover:bg-red-950/80 text-slate-300 hover:text-red-400 border border-white/10 hover:border-red-500/40 flex items-center justify-center transition shadow-lg" aria-label="Close Logo Popup">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+
+        <!-- Ambient Red Backlight -->
+        <div class="relative w-full flex items-center justify-center my-6">
+          <div class="absolute inset-0 bg-red-600/25 rounded-full blur-3xl pointer-events-none scale-125 animate-glow"></div>
+          <img src="assets/images/logo.png" alt="LYFAds Official Brand Mark" class="relative z-10 w-full max-w-sm sm:max-w-md h-auto object-contain filter drop-shadow-[0_0_35px_rgba(220,38,38,0.6)] transform transition duration-500 hover:scale-105 select-none">
+        </div>
+
+        <!-- Agency Title & Typography -->
+        <div class="space-y-1.5 mt-2">
+          <div class="text-2xl sm:text-3xl font-black font-heading tracking-tight text-white flex items-center justify-center gap-2">
+            <span>LYF<span class="text-purple-400">Ads</span></span>
+            <span class="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">Bengaluru HQ</span>
+          </div>
+          <p class="text-xs text-slate-400 font-medium tracking-wide">
+            Official Creative Video Production & Visual Design Emblem
+          </p>
+          <div class="pt-3">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-slate-300">
+              <i class="fa-solid fa-camera text-red-400 text-xs"></i> Cinema-Grade Ad Films & Algorithmic Scale
+            </span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    const closeBtn = modal.querySelector('#close-logo-lightbox');
+    closeBtn.addEventListener('click', closeLogoLightbox);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeLogoLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeLogoLightbox();
+      }
+    });
+
+    return modal;
+  }
+
+  function openLogoLightbox() {
+    const modal = ensureLogoLightbox();
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLogoLightbox() {
+    const modal = document.getElementById('logo-lightbox-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function initLogoHoverTriggers() {
+    ensureLogoLightbox();
+
+    // Select all logo elements across pages
+    const targets = document.querySelectorAll('.lyfads-logo-trigger, img[src*="logo.png"], .lyfads-logo-icon-container');
+    targets.forEach((el) => {
+      el.style.cursor = 'pointer';
+      if (!el.getAttribute('title')) {
+        el.setAttribute('title', 'Hover or tap to preview LYFAds emblem');
+      }
+
+      // Mouse enter (hover)
+      el.addEventListener('mouseenter', () => {
+        clearTimeout(logoHoverTimer);
+        logoHoverTimer = setTimeout(() => {
+          openLogoLightbox();
+        }, 180); // 180ms hover dwell
+      });
+
+      // Mouse leave
+      el.addEventListener('mouseleave', () => {
+        clearTimeout(logoHoverTimer);
+      });
+
+      // Click or touch
+      el.addEventListener('click', (e) => {
+        if (el.tagName === 'IMG' || el.classList.contains('lyfads-logo-icon-container') || el.classList.contains('lyfads-logo-trigger')) {
+          e.preventDefault();
+          e.stopPropagation();
+          clearTimeout(logoHoverTimer);
+          openLogoLightbox();
+        }
+      });
+
+      el.addEventListener('touchstart', (e) => {
+        if (el.tagName === 'IMG' || el.classList.contains('lyfads-logo-icon-container') || el.classList.contains('lyfads-logo-trigger')) {
+          e.preventDefault();
+          e.stopPropagation();
+          clearTimeout(logoHoverTimer);
+          openLogoLightbox();
+        }
+      }, { passive: false });
+    });
+  }
+
+  // Bind on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLogoHoverTriggers);
+  } else {
+    initLogoHoverTriggers();
+  }
+
   // Expose hooks globally
   window.showToast = showToast;
   window.openServiceModal = openServiceModal;
   window.closeServiceModal = closeServiceModal;
   window.openCaseStudyModal = openCaseStudyModal;
   window.closeCaseStudyModal = closeCaseStudyModal;
+  window.openLogoLightbox = openLogoLightbox;
+  window.closeLogoLightbox = closeLogoLightbox;
 
 })();
 
