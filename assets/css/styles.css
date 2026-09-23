@@ -242,3 +242,18 @@ h1, h2, h3, h4, .font-heading {
   transform: translateY(0);
 }
 
+/* Cyber Matrix Grid & Holographic Stage */
+.cyber-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.holo-border {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 35px rgba(139, 92, 246, 0.2), 0 0 70px rgba(6, 182, 212, 0.12), inset 0 0 25px rgba(255, 255, 255, 0.02);
+}
+
+

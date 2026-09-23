@@ -396,9 +396,12 @@
   }
 
   // ==========================================
-  // 4. Large Transparent Logo Lightbox Popup
+  // 4. Large Holographic Logo Lightbox with Particle Canvas & Studio HUD
   // ==========================================
   let logoHoverTimer = null;
+  let modalAnimId = null;
+  let modalParticles = [];
+  let modalMouse = { x: null, y: null, radius: 110 };
 
   function ensureLogoLightbox() {
     let modal = document.getElementById('logo-lightbox-modal');
@@ -406,33 +409,79 @@
 
     modal = document.createElement('div');
     modal.id = 'logo-lightbox-modal';
-    modal.className = 'modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-2xl hidden transition-all duration-300';
+    modal.className = 'modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-2xl hidden transition-all duration-300';
     modal.innerHTML = `
-      <div class="modal-container glass-panel relative w-full max-w-xl p-8 sm:p-12 rounded-3xl border border-white/15 shadow-[0_0_60px_rgba(0,0,0,0.85)] flex flex-col items-center text-center bg-slate-950/85">
-        <!-- Close button in the corner -->
-        <button id="close-logo-lightbox" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-slate-800/80 hover:bg-red-950/80 text-slate-300 hover:text-red-400 border border-white/10 hover:border-red-500/40 flex items-center justify-center transition shadow-lg" aria-label="Close Logo Popup">
-          <i class="fa-solid fa-xmark text-sm"></i>
-        </button>
+      <div id="logo-lightbox-card" class="modal-container holo-border cyber-grid relative w-full max-w-2xl p-6 sm:p-10 rounded-3xl bg-slate-950/95 overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.9)] flex flex-col items-center text-center">
+        
+        <!-- Interactive Particle Canvas inside the Popup -->
+        <canvas id="modal-particle-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
 
-        <!-- Ambient Red Backlight -->
-        <div class="relative w-full flex items-center justify-center my-6">
-          <div class="absolute inset-0 bg-red-600/25 rounded-full blur-3xl pointer-events-none scale-125 animate-glow"></div>
-          <img src="assets/images/logo.png" alt="LYFAds Official Brand Mark" class="relative z-10 w-full max-w-sm sm:max-w-md h-auto object-contain filter drop-shadow-[0_0_35px_rgba(220,38,38,0.6)] transform transition duration-500 hover:scale-105 select-none">
+        <!-- Viewfinder Corner Brackets HUD -->
+        <div class="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-cyan-400/50 pointer-events-none z-10"></div>
+        <div class="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-cyan-400/50 pointer-events-none z-10"></div>
+        <div class="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-purple-500/50 pointer-events-none z-10"></div>
+        <div class="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-purple-500/50 pointer-events-none z-10"></div>
+
+        <!-- Top Studio Viewfinder Header HUD Bar -->
+        <div class="relative z-10 w-full flex items-center justify-between pb-3.5 mb-2 border-b border-white/10 text-xs font-mono">
+          <div class="flex items-center gap-2 text-emerald-400 font-semibold tracking-wider">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-[11px] uppercase tracking-widest font-bold">[ ● REC ] 4K PRORES RAW</span>
+          </div>
+          <div class="hidden sm:flex items-center gap-2.5 text-slate-400 text-[10px] uppercase tracking-wider">
+            <span>ISO 800</span>
+            <span>•</span>
+            <span>f/1.8 APERTURE</span>
+            <span>•</span>
+            <span class="text-cyan-400 font-bold">BENGALURU STUDIO</span>
+          </div>
+          <!-- Close button in the corner -->
+          <button id="close-logo-lightbox" class="w-8 h-8 rounded-full bg-slate-900/90 hover:bg-red-950/80 text-slate-300 hover:text-red-400 border border-white/15 hover:border-red-500/50 flex items-center justify-center transition shadow-lg" aria-label="Close Logo Popup">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+
+        <!-- Ambient Studio Soft Spotlight (Clean, No Muddy Blur) -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-tr from-purple-600/10 via-cyan-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Central High-Contrast Logo Pedestal with 3D Tilt Optics -->
+        <div id="lightbox-logo-stage" class="relative z-10 my-4 p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-md shadow-2xl transition duration-200">
+          <img id="lightbox-logo-img" src="assets/images/logo.png" alt="LYFAds Official Brand Mark" class="relative z-10 w-full max-w-[280px] sm:max-w-md h-auto object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.85)] select-none pointer-events-none">
         </div>
 
         <!-- Agency Title & Typography -->
-        <div class="space-y-1.5 mt-2">
+        <div class="relative z-10 space-y-1.5 mt-1">
           <div class="text-2xl sm:text-3xl font-black font-heading tracking-tight text-white flex items-center justify-center gap-2">
             <span>LYF<span class="text-purple-400">Ads</span></span>
-            <span class="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">Bengaluru HQ</span>
+            <span class="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">Bengaluru HQ</span>
           </div>
-          <p class="text-xs text-slate-400 font-medium tracking-wide">
-            Official Creative Video Production & Visual Design Emblem
+          <p class="text-xs sm:text-sm text-slate-300 font-medium tracking-wide max-w-md mx-auto">
+            Official Creative Video Production Studio & 10x Full-Funnel Growth Agency
           </p>
-          <div class="pt-3">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-slate-300">
-              <i class="fa-solid fa-camera text-red-400 text-xs"></i> Cinema-Grade Ad Films & Algorithmic Scale
+
+          <!-- Badges / Specs -->
+          <div class="flex flex-wrap items-center justify-center gap-2 pt-2 text-[11px] text-slate-300">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-purple-300">
+              <i class="fa-solid fa-clapperboard text-xs mr-1 text-purple-400"></i> Cinema-Grade Ad Films
             </span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-cyan-300">
+              <i class="fa-solid fa-chart-line text-xs mr-1 text-cyan-400"></i> 10x Performance Media
+            </span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-emerald-300">
+              <i class="fa-solid fa-robot text-xs mr-1 text-emerald-400"></i> AI Automation Bots
+            </span>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center gap-3 pt-4">
+            <a href="assets/images/logo.png" download="LYFAds_Official_Logo.png" class="px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5 shadow">
+              <i class="fa-solid fa-download text-xs text-purple-400"></i>
+              <span>Download Master Logo</span>
+            </a>
+            <button onclick="closeLogoLightbox(); openServiceModal('Creative Video Production', 'Consultation with our Bengaluru Studio Directors');" class="btn-primary px-5 py-2 rounded-xl text-xs font-semibold text-white flex items-center gap-1.5 shadow-lg">
+              <span>Book Studio Consultation</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -456,10 +505,138 @@
     return modal;
   }
 
+  function startModalParticleEngine() {
+    const canvas = document.getElementById('modal-particle-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const card = document.getElementById('logo-lightbox-card');
+    if (!card) return;
+
+    let width = canvas.width = card.offsetWidth;
+    let height = canvas.height = card.offsetHeight;
+
+    class ModalParticle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.85;
+        this.vy = (Math.random() - 0.5) * 0.85;
+        this.radius = Math.random() * 2 + 1.2;
+        const colors = [
+          'rgba(6, 182, 212,',   // Cyan
+          'rgba(139, 92, 246,',  // Violet
+          'rgba(56, 189, 248,',  // Electric blue
+          'rgba(255, 255, 255,'  // Starlight
+        ];
+        this.baseColor = colors[Math.floor(Math.random() * colors.length)];
+        this.alpha = Math.random() * 0.5 + 0.3;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > width) this.vx = -this.vx;
+        if (this.y < 0 || this.y > height) this.vy = -this.vy;
+
+        // Gravitational mouse physics
+        if (modalMouse.x !== null && modalMouse.y !== null) {
+          const dx = modalMouse.x - this.x;
+          const dy = modalMouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < modalMouse.radius) {
+            const force = (modalMouse.radius - dist) / modalMouse.radius;
+            const angle = Math.atan2(dy, dx);
+            this.x += Math.cos(angle) * force * 1.6;
+            this.y += Math.sin(angle) * force * 1.6;
+          }
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.baseColor + this.alpha + ')';
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#06b6d4';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    modalParticles = [];
+    const count = width < 500 ? 25 : 45;
+    for (let i = 0; i < count; i++) {
+      modalParticles.push(new ModalParticle());
+    }
+
+    function connectNodes() {
+      const maxDist = 95;
+      for (let a = 0; a < modalParticles.length; a++) {
+        for (let b = a + 1; b < modalParticles.length; b++) {
+          const dx = modalParticles[a].x - modalParticles[b].x;
+          const dy = modalParticles[a].y - modalParticles[b].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < maxDist) {
+            const opacity = (1 - dist / maxDist) * 0.25;
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(139, 92, 246, ${opacity})`;
+            ctx.lineWidth = 0.75;
+            ctx.moveTo(modalParticles[a].x, modalParticles[a].y);
+            ctx.lineTo(modalParticles[b].x, modalParticles[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < modalParticles.length; i++) {
+        modalParticles[i].update();
+        modalParticles[i].draw();
+      }
+      connectNodes();
+      modalAnimId = requestAnimationFrame(animate);
+    }
+
+    if (modalAnimId) cancelAnimationFrame(modalAnimId);
+    animate();
+
+    card.onmousemove = (e) => {
+      const rect = card.getBoundingClientRect();
+      modalMouse.x = e.clientX - rect.left;
+      modalMouse.y = e.clientY - rect.top;
+
+      // 3D Gyroscopic tilt on central logo stage
+      const stage = document.getElementById('lightbox-logo-stage');
+      if (stage) {
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const deltaX = (modalMouse.x - centerX) / centerX;
+        const deltaY = (modalMouse.y - centerY) / centerY;
+        stage.style.transform = `perspective(800px) rotateX(${(-deltaY * 7).toFixed(2)}deg) rotateY(${(deltaX * 7).toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+      }
+    };
+
+    card.onmouseleave = () => {
+      modalMouse.x = null;
+      modalMouse.y = null;
+      const stage = document.getElementById('lightbox-logo-stage');
+      if (stage) {
+        stage.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      }
+    };
+  }
+
   function openLogoLightbox() {
     const modal = ensureLogoLightbox();
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    // Start particle engine after layout render
+    setTimeout(startModalParticleEngine, 50);
   }
 
   function closeLogoLightbox() {
@@ -467,6 +644,10 @@
     if (modal) {
       modal.classList.add('hidden');
       document.body.style.overflow = '';
+      if (modalAnimId) {
+        cancelAnimationFrame(modalAnimId);
+        modalAnimId = null;
+      }
     }
   }
 
