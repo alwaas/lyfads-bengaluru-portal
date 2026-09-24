@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enterprise Admin Lead CRM & Control Portal | LYFAds Bengaluru</title>
-  <meta name="description" content="Central Enterprise Lead Management CRM & Real-time Notification Portal for LYFAds Bengaluru.">
+  <title>Admin Panel | LYFAds Bengaluru</title>
+  <meta name="description" content="Central Enterprise Admin Panel for LYFAds Bengaluru.">
   <link rel="icon" type="image/png" href="assets/images/favicon.png">
 
   <!-- Tailwind CSS CDN -->
@@ -59,9 +59,9 @@
         <div>
           <div class="text-sm font-black font-heading text-white tracking-tight flex items-center gap-1.5">
             <span>LYF<span class="text-purple-400">Ads</span></span>
-            <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono font-bold">Control Center</span>
+            <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono font-bold">Admin Panel</span>
           </div>
-          <p class="text-[10px] text-slate-400">Central Lead CRM & Multi-Admin Engine</p>
+          <p class="text-[10px] text-slate-400">Bengaluru Headquarters • Real-time Multi-Device Engine</p>
         </div>
       </a>
 
@@ -141,11 +141,11 @@
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
       <div>
         <div class="flex items-center gap-2 text-xs font-semibold text-purple-400 uppercase tracking-widest mb-1">
-          <i class="fa-solid fa-database text-xs"></i> Permanent Multi-Device CRM State
+          <i class="fa-solid fa-database text-xs"></i> Permanent Multi-Device Database
         </div>
         <h1 class="text-2xl sm:text-3xl font-black font-heading tracking-tight text-white flex items-center gap-2.5">
-          <span>Enterprise Command Center</span>
-          <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">v2.4 Live Sync</span>
+          <span>Enterprise Admin Panel</span>
+          <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Live Sync</span>
         </h1>
         <p class="text-xs text-slate-400 mt-1">Cross-device lead storage, real-time incoming alerts, and email notifications to registered team members.</p>
       </div>
@@ -154,7 +154,7 @@
       <div class="flex items-center gap-1.5 p-1 rounded-xl bg-slate-900/90 border border-white/10 backdrop-blur-md self-start md:self-auto overflow-x-auto max-w-full">
         <button id="tab-btn-leads" onclick="switchAdminTab('leads')" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-purple-600 text-white shadow-lg">
           <i class="fa-solid fa-users-line text-xs"></i>
-          <span>Inbound Leads CRM</span>
+          <span>Inbound Leads</span>
           <span id="tab-badge-count" class="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] ml-1">5</span>
         </button>
 
@@ -167,15 +167,10 @@
           <i class="fa-solid fa-user-shield text-xs"></i>
           <span>Admin Credentials</span>
         </button>
-
-        <button id="tab-btn-insights" onclick="switchAdminTab('insights')" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-400 hover:text-white">
-          <i class="fa-solid fa-gauge-high text-xs"></i>
-          <span>Speed & CMS Report</span>
-        </button>
       </div>
     </div>
 
-    <!-- TAB 1: LEADS PIPELINE CRM -->
+    <!-- TAB 1: INBOUND LEADS -->
     <div id="tab-view-leads" class="tab-view space-y-6 pt-6">
 
       <!-- Metrics Stat Cards -->
@@ -445,51 +440,6 @@
       </div>
     </div>
 
-    <!-- TAB 4: ARCHITECTURE & SPEED BENCHMARK (USER QUESTION ANSWER) -->
-    <div id="tab-view-insights" class="tab-view hidden space-y-6 pt-6">
-      <div class="glass-panel p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-purple-950/30">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400">
-            <i class="fa-solid fa-bolt text-lg"></i>
-          </div>
-          <div>
-            <h2 class="text-xl font-black font-heading text-white">Architectural Speed & CMS Analysis</h2>
-            <p class="text-xs text-purple-300">Principal Architect Advisory: Dynamic Section Editing vs 100/100 Core Web Vitals</p>
-          </div>
-        </div>
-
-        <div class="space-y-4 text-xs text-slate-300 leading-relaxed border-t border-white/10 pt-4">
-          <div class="p-4 rounded-xl bg-slate-950/70 border border-white/10">
-            <h3 class="font-bold text-sm text-white mb-2 flex items-center gap-2">
-              <i class="fa-solid fa-circle-question text-amber-400"></i>
-              <span>User Question: "Admin Panel se website ke sections modify karne par website slow hogi kya?"</span>
-            </h3>
-            <p class="text-slate-300">
-              <strong class="text-white">Honest Technical Reality:</strong> Agar website ke pure visual sections (Hero, Cards, About, Grids) ko runtime me database se fetch kar ke client-side JavaScript se render kiya jaye (jaise heavy WordPress ya runtime CMS me hota hai), toh website <strong class="text-rose-400">100% SLOW ho jayegi</strong>:
-            </p>
-            <ul class="list-disc list-inside mt-2 space-y-1 text-slate-400">
-              <li><strong>Database Network Latency:</strong> Mobile par 300ms - 800ms ka extra delay aayega jab tak sections fetch honge.</li>
-              <li><strong>Cumulative Layout Shift (CLS):</strong> Sections achanak screen par jump karenge, jisse Google SEO score drop hoga.</li>
-              <li><strong>LCP Degradation:</strong> Largest Contentful Paint (LCP) 0.8s se badhkar 2.5s+ ho jayega, jisse particle canvas smooth nahi chalega.</li>
-            </ul>
-          </div>
-
-          <div class="p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30">
-            <h3 class="font-bold text-sm text-emerald-300 mb-2 flex items-center gap-2">
-              <i class="fa-solid fa-circle-check text-emerald-400"></i>
-              <span>Our Zero-Cost, 0% Speed Loss Solution (Implemented)</span>
-            </h3>
-            <p class="text-slate-200">
-              Aapke niyam <strong class="text-white">("Agar slow hogi to mat karna")</strong> ke anusar, humne <strong class="text-emerald-400">Static-First Architecture</strong> maintain kiya hai:
-            </p>
-            <ul class="list-disc list-inside mt-2 space-y-1 text-slate-300">
-              <li>Core HTML5 structure 100% static rehta hai jisse page <strong>0.2 second</strong> me instant load hota hai (100/100 Lighthouse score).</li>
-              <li>Central Database ke through <strong>Leads, Inquiries, Notifications, aur Admin Credentials</strong> ko real-time dynamic banaya gaya hai.</li>
-              <li>Is tareeqe se speed me <strong>0.00% effect</strong> padta hai aur website lightning-fast rehti hai!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
 
   </main>
@@ -1085,6 +1035,10 @@
       renderLeadsTable();
     });
 
+    window.addEventListener('lyfads:leads_synced', () => {
+      renderLeadsTable();
+    });
+
     window.addEventListener('lyfads:notification_dispatched', (e) => {
       const log = e.detail;
       if (log) {
@@ -1106,3 +1060,4 @@
   </script>
 </body>
 </html>
+

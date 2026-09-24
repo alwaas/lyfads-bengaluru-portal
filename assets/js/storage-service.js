@@ -85,18 +85,73 @@ const SEED_LEADS = [
 
 class StorageService {
   constructor() {
-    this.apiBase = this.detectApiBase();
+    this.apiBase = 'http://localhost:3000/api';
     this.isServerConnected = false;
     this.eventSource = null;
+    this.pollingInterval = null;
+    this.broadcastChannel = (typeof BroadcastChannel !== 'undefined') ? new BroadcastChannel('lyfads_realtime_sync') : null;
+
+    if (this.broadcastChannel) {
+      this.broadcastChannel.onmessage = (event) => {
+        this.handleBusMessage(event.data);
+      };
+    }
+
+    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+      window.addEventListener('storage', (e) => {
+        if (e.key === STORAGE_KEY && e.newValue) {
+          try {
+            const freshLeads = JSON.parse(e.newValue);
+            if (typeof window.dispatchEvent === 'function' && typeof CustomEvent === 'function') {
+              window.dispatchEvent(new CustomEvent('lyfads:leads_synced', { detail: freshLeads }));
+            }
+          } catch (err) {}
+        }
+      });
+    }
+
     this.initStorage();
     this.initBackendSync();
   }
 
-  detectApiBase() {
-    if (typeof window !== 'undefined' && window.location && window.location.protocol && window.location.protocol.startsWith('http')) {
-      return `${window.location.origin}/api`;
+  detectCandidateBases() {
+    const candidates = [];
+    if (typeof window !== 'undefined' && window.location) {
+      const loc = window.location;
+      if (loc.port === '3000') {
+        candidates.push(`${loc.origin}/api`);
+      }
+      if (loc.hostname) {
+        candidates.push(`http://${loc.hostname}:3000/api`);
+      }
+      candidates.push('http://localhost:3000/api');
+      candidates.push('http://127.0.0.1:3000/api');
+      if (loc.origin && !candidates.includes(`${loc.origin}/api`)) {
+        candidates.push(`${loc.origin}/api`);
+      }
+    } else {
+      candidates.push('http://localhost:3000/api');
     }
-    return 'http://localhost:3000/api';
+    return [...new Set(candidates)];
+  }
+
+  triggerEvent(name, detail) {
+    if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function' && typeof CustomEvent === 'function') {
+      try {
+        window.dispatchEvent(new CustomEvent(name, { detail }));
+      } catch (e) {}
+    }
+  }
+
+  handleBusMessage(data) {
+    if (!data || !data.action) return;
+    if (data.action === 'lead_created' && data.lead) {
+      this.handleRemoteLeadCreated(data.lead);
+    } else if (data.action === 'lead_updated' && data.lead) {
+      this.handleRemoteLeadUpdated(data.lead);
+    } else if (data.action === 'lead_deleted' && data.payload) {
+      this.handleRemoteLeadDeleted(data.payload);
+    }
   }
 
   // Security Layer: Enterprise XSS Sanitizer
@@ -126,42 +181,60 @@ class StorageService {
   }
 
   // ==========================================
-  // Real-Time Backend Synchronization & SSE
+  // Real-Time Multi-Device Sync Engine (SSE + Polling + Bus)
   // ==========================================
   async initBackendSync() {
     if (typeof window === 'undefined') return;
 
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
-      const res = await fetch(`${this.apiBase}/leads`, { signal: controller.signal });
-      clearTimeout(timeoutId);
+    const candidates = this.detectCandidateBases();
+    let connected = false;
 
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.success && Array.isArray(data.leads)) {
-          this.isServerConnected = true;
-          this.mergeRemoteLeads(data.leads);
-          this.connectEventSource();
-          window.dispatchEvent(new CustomEvent('lyfads:server_connected', { detail: { count: data.leads.length } }));
+    for (const candidate of candidates) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 1800);
+        const res = await fetch(`${candidate}/leads`, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.success && Array.isArray(data.leads)) {
+            this.apiBase = candidate;
+            this.isServerConnected = true;
+            connected = true;
+            this.mergeRemoteLeads(data.leads);
+            this.connectEventSource();
+            this.triggerEvent('lyfads:server_connected', { count: data.leads.length, apiBase: this.apiBase });
+            break;
+          }
         }
+      } catch (err) {
+        // try next candidate
       }
-    } catch (err) {
-      this.isServerConnected = false;
-      console.log('[Storage] Central database server offline or unreachable; using local browser storage.');
     }
+
+    if (!connected) {
+      this.isServerConnected = false;
+      console.log('[Storage] Central database server offline; running in resilient local storage mode.');
+    }
+
+    // Always initiate smart fallback polling (every 2.5s) to guarantee zero-miss cross-device sync
+    this.startPollingHeartbeat();
   }
 
   connectEventSource() {
     if (typeof window === 'undefined' || typeof EventSource === 'undefined') return;
-    if (this.eventSource) return;
+    if (this.eventSource && this.eventSource.readyState !== EventSource.CLOSED) return;
 
     try {
+      if (this.eventSource) {
+        this.eventSource.close();
+      }
       this.eventSource = new EventSource(`${this.apiBase}/leads/stream`);
 
       this.eventSource.onopen = () => {
         this.isServerConnected = true;
-        window.dispatchEvent(new CustomEvent('lyfads:stream_connected'));
+        this.triggerEvent('lyfads:stream_connected');
       };
 
       this.eventSource.onmessage = (event) => {
@@ -176,7 +249,7 @@ class StorageService {
           } else if (packet.type === 'lyfads:lead_deleted') {
             this.handleRemoteLeadDeleted(packet.payload);
           } else if (packet.type === 'lyfads:notification_dispatched') {
-            window.dispatchEvent(new CustomEvent('lyfads:notification_dispatched', { detail: packet.payload }));
+            this.triggerEvent('lyfads:notification_dispatched', packet.payload);
           }
         } catch (e) {
           // ignore stream parse errors
@@ -184,17 +257,95 @@ class StorageService {
       };
 
       this.eventSource.onerror = () => {
-        // Will auto-reconnect
+        // Automatically handled by EventSource reconnect and smart polling heartbeat
       };
     } catch (err) {
       console.warn('[SSE] EventSource init error:', err);
     }
   }
 
+  startPollingHeartbeat() {
+    if (typeof clearInterval === 'function' && this.pollingInterval) {
+      clearInterval(this.pollingInterval);
+    }
+    if (typeof setInterval === 'function') {
+      this.pollingInterval = setInterval(async () => {
+        await this.pollServerChanges();
+      }, 2500);
+    }
+  }
+
+  async pollServerChanges() {
+    if (typeof window === 'undefined' || !this.apiBase) return;
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      const res = await fetch(`${this.apiBase}/leads`, { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success && Array.isArray(data.leads)) {
+          this.isServerConnected = true;
+          this.reconcileServerLeads(data.leads);
+          if (!this.eventSource || this.eventSource.readyState === EventSource.CLOSED) {
+            this.connectEventSource();
+          }
+        }
+      }
+    } catch (e) {
+      // transient network blip
+    }
+  }
+
+  reconcileServerLeads(serverLeads) {
+    const localLeads = this.getLeads();
+    const localMap = new Map(localLeads.map(l => [l.id, l]));
+    const serverMap = new Map(serverLeads.map(l => [l.id, l]));
+
+    let hasChanges = false;
+    const newLeadsDetected = [];
+
+    // 1. Detect new leads created on other devices
+    for (const sLead of serverLeads) {
+      if (!localMap.has(sLead.id)) {
+        newLeadsDetected.push(sLead);
+        hasChanges = true;
+      } else {
+        const lLead = localMap.get(sLead.id);
+        if (lLead.status !== sLead.status) {
+          lLead.status = sLead.status;
+          hasChanges = true;
+          this.triggerEvent('lyfads:lead_updated', sLead);
+        }
+      }
+    }
+
+    // 2. Detect deletions performed on other devices
+    if (serverLeads.length < localLeads.length) {
+      for (const lLead of localLeads) {
+        if (!serverMap.has(lLead.id)) {
+          hasChanges = true;
+          this.triggerEvent('lyfads:lead_deleted', { id: lLead.id });
+        }
+      }
+    }
+
+    if (hasChanges || newLeadsDetected.length > 0) {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(serverLeads));
+      }
+      for (const nl of newLeadsDetected) {
+        this.triggerEvent('lyfads:lead_created', nl);
+      }
+      this.triggerEvent('lyfads:leads_synced', serverLeads);
+    }
+  }
+
   mergeRemoteLeads(remoteLeads) {
     if (typeof localStorage === 'undefined') return;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remoteLeads));
-    window.dispatchEvent(new CustomEvent('lyfads:leads_synced', { detail: remoteLeads }));
+    this.triggerEvent('lyfads:leads_synced', remoteLeads);
   }
 
   handleRemoteLeadCreated(lead) {
@@ -205,7 +356,7 @@ class StorageService {
       if (typeof localStorage !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
       }
-      window.dispatchEvent(new CustomEvent('lyfads:lead_created', { detail: lead }));
+      this.triggerEvent('lyfads:lead_created', lead);
     }
   }
 
@@ -218,7 +369,7 @@ class StorageService {
       if (typeof localStorage !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
       }
-      window.dispatchEvent(new CustomEvent('lyfads:lead_updated', { detail: lead }));
+      this.triggerEvent('lyfads:lead_updated', lead);
     }
   }
 
@@ -229,7 +380,7 @@ class StorageService {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
     }
-    window.dispatchEvent(new CustomEvent('lyfads:lead_deleted', { detail: payload }));
+    this.triggerEvent('lyfads:lead_deleted', payload);
   }
 
   // ==========================================
@@ -253,12 +404,12 @@ class StorageService {
     return this.getLeads().find(l => l.id === id) || null;
   }
 
-  // Save new lead (Syncs instantly to Central Database & Dispatches Notifications)
+  // Save new lead (Syncs instantly across all devices, windows & central DB)
   saveLead(data) {
     const leads = this.getLeads();
     const newLead = {
-      id: 'lead_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
-      createdAt: new Date().toISOString(),
+      id: data.id || ('lead_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7)),
+      createdAt: data.createdAt || new Date().toISOString(),
       fullName: StorageService.sanitize(data.fullName || ''),
       email: StorageService.sanitize(data.email || ''),
       phone: StorageService.sanitize(data.phone || ''),
@@ -276,9 +427,12 @@ class StorageService {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
     }
 
-    // Trigger local DOM event
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('lyfads:lead_created', { detail: newLead }));
+    // Trigger local DOM event immediately
+    this.triggerEvent('lyfads:lead_created', newLead);
+
+    // Broadcast to cross-tab channel
+    if (this.broadcastChannel) {
+      this.broadcastChannel.postMessage({ action: 'lead_created', lead: newLead });
     }
 
     // Push asynchronously to Central Server & Email Dispatch
@@ -286,7 +440,7 @@ class StorageService {
       fetch(`${this.apiBase}/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(newLead)
       }).then(res => res.json())
         .then(result => {
           if (result && result.lead) {
@@ -309,8 +463,10 @@ class StorageService {
       if (typeof localStorage !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
       }
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('lyfads:lead_updated', { detail: target }));
+      this.triggerEvent('lyfads:lead_updated', target);
+
+      if (this.broadcastChannel) {
+        this.broadcastChannel.postMessage({ action: 'lead_updated', lead: target });
       }
 
       // Sync with central backend
@@ -334,8 +490,10 @@ class StorageService {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
     }
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('lyfads:lead_deleted', { detail: { id } }));
+    this.triggerEvent('lyfads:lead_deleted', { id });
+
+    if (this.broadcastChannel) {
+      this.broadcastChannel.postMessage({ action: 'lead_deleted', payload: { id } });
     }
 
     // Sync with central backend
@@ -351,9 +509,7 @@ class StorageService {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_LEADS));
     }
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('lyfads:storage_reset'));
-    }
+    this.triggerEvent('lyfads:storage_reset');
 
     if (typeof fetch !== 'undefined') {
       fetch(`${this.apiBase}/leads/reset`, { method: 'POST' }).catch(() => {});

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Portal Login | LYFAds Bengaluru Enterprise Lead CRM</title>
-  <meta name="description" content="Secure Admin Login for LYFAds Bengaluru Creative Ad Production Studio & Growth Agency Lead CRM.">
+  <title>Admin Panel Login | LYFAds Bengaluru</title>
+  <meta name="description" content="Secure Admin Panel Login for LYFAds Bengaluru.">
   <link rel="icon" type="image/png" href="assets/images/favicon.png">
 
   <!-- Tailwind CSS CDN -->
@@ -57,7 +57,7 @@
       <div>
         <div class="text-sm font-bold font-heading text-white tracking-tight flex items-center gap-1.5">
           <span>LYF<span class="text-purple-400">Ads</span></span>
-          <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono font-bold">Admin Portal</span>
+          <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono font-bold">Admin Panel</span>
         </div>
         <p class="text-[10px] text-slate-400">Bengaluru Studio Headquarters</p>
       </div>
@@ -88,8 +88,8 @@
             <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-purple-600/20 to-red-600/20 border border-purple-500/40 flex items-center justify-center shadow-inner mb-3">
               <i class="fa-solid fa-shield-halved text-2xl text-purple-400"></i>
             </div>
-            <h1 class="text-2xl font-black font-heading tracking-tight text-white">Admin Authentication</h1>
-            <p class="text-xs text-slate-400 mt-1">Multi-Device Central CRM & Real-time Lead Dispatch</p>
+            <h1 class="text-2xl font-black font-heading tracking-tight text-white">Admin Panel Login</h1>
+            <p class="text-xs text-slate-400 mt-1">Authorized Personnel Only • Secure Session</p>
           </div>
 
           <!-- Alert message placeholder -->
@@ -110,7 +110,7 @@
                   type="text" 
                   id="admin-identifier" 
                   required 
-                  placeholder="admin@lyfads.com or admin"
+                  placeholder="Enter email or username"
                   class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition shadow-inner">
               </div>
             </div>
@@ -145,37 +145,16 @@
               type="submit" 
               id="login-submit-btn" 
               class="w-full btn-primary py-3 px-4 rounded-xl font-semibold text-sm text-white flex items-center justify-center gap-2 shadow-lg shadow-purple-600/30 transition mt-2">
-              <span>Sign In to Control Center</span>
+              <span>Sign In to Admin Panel</span>
               <i class="fa-solid fa-arrow-right text-xs"></i>
             </button>
           </form>
 
-          <!-- Quick One-Click Demo Admin Switcher for Testing -->
-          <div class="mt-6 pt-5 border-t border-white/10">
-            <div class="text-[11px] uppercase tracking-wider font-bold text-slate-400 text-center mb-2.5">
-              Instant Demo Admin Credentials
-            </div>
-            <div class="grid grid-cols-3 gap-2">
-              <button onclick="fillCredentials('admin@lyfads.com', 'admin123')" class="px-2 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-[11px] text-slate-300 hover:text-white transition text-center truncate">
-                <div class="font-bold text-purple-400">Super Admin</div>
-                <div class="text-[10px] text-slate-400">admin123</div>
-              </button>
-              <button onclick="fillCredentials('bengaluru@lyfads.com', 'lyfads2026')" class="px-2 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-[11px] text-slate-300 hover:text-white transition text-center truncate">
-                <div class="font-bold text-cyan-400">Growth Lead</div>
-                <div class="text-[10px] text-slate-400">lyfads2026</div>
-              </button>
-              <button onclick="fillCredentials('sales@lyfads.com', 'sales123')" class="px-2 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-[11px] text-slate-300 hover:text-white transition text-center truncate">
-                <div class="font-bold text-emerald-400">Sales Lead</div>
-                <div class="text-[10px] text-slate-400">sales123</div>
-              </button>
-            </div>
-          </div>
-
           <!-- Security Notice -->
-          <div class="mt-5 text-center">
+          <div class="mt-6 pt-5 border-t border-white/10 text-center">
             <p class="text-[10px] text-slate-500 flex items-center justify-center gap-1.5">
               <i class="fa-solid fa-lock text-emerald-400"></i>
-              <span>Authorized personnel only. Multi-admin access monitored.</span>
+              <span>Confidential & Protected. Multi-device access monitored.</span>
             </p>
           </div>
         </div>
@@ -211,13 +190,6 @@
       passwordInput.type = isPwd ? 'text' : 'password';
       togglePwdBtn.textContent = isPwd ? 'Hide' : 'Show';
     });
-
-    // Quick fill helper
-    function fillCredentials(id, pwd) {
-      identifierInput.value = id;
-      passwordInput.value = pwd;
-      showAlert('Demo credentials filled. Click "Sign In" to proceed.', 'info');
-    }
 
     function showAlert(msg, type = 'error') {
       alertBox.classList.remove('hidden', 'bg-rose-950/60', 'border-rose-500/50', 'text-rose-200', 'bg-cyan-950/60', 'border-cyan-500/50', 'text-cyan-200');
@@ -265,3 +237,4 @@
   </script>
 </body>
 </html>
+

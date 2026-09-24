@@ -139,7 +139,11 @@ const storageSandbox = {
     removeItem: (k) => { delete store[k]; }
   },
   console: console,
-  CustomEvent: function(name, opts) { return { name, opts }; }
+  CustomEvent: function(name, opts) { return { name, opts }; },
+  setInterval: () => 1,
+  clearInterval: () => {},
+  setTimeout: setTimeout,
+  clearTimeout: clearTimeout
 };
 vm.createContext(storageSandbox);
 vm.runInContext(storageCode, storageSandbox);

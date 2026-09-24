@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us & Admin Lead CRM | LYFAds Bengaluru</title>
-  <meta name="description" content="Contact LYFAds Bengaluru for bespoke creative ad production, video shoots, and performance marketing. Includes real-time Enterprise Admin Lead Dashboard.">
-  <meta property="og:title" content="Contact LYFAds Bengaluru & Enterprise Lead CRM">
-  <meta property="og:description" content="Book a strategy consultation or manage live agency leads in real-time.">
+  <title>Contact Us | LYFAds Bengaluru</title>
+  <meta name="description" content="Contact LYFAds Bengaluru for bespoke creative ad production, video shoots, and performance marketing. Connect directly with our strategy directors.">
+  <meta property="og:title" content="Contact LYFAds Bengaluru">
+  <meta property="og:description" content="Book a strategy consultation or request a custom digital growth proposal.">
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -64,14 +64,14 @@
       <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
         <a href="index.html" data-page="index.html" class="text-slate-300 hover:text-white transition duration-200">Home & Services</a>
         <a href="about.html" data-page="about.html" class="text-slate-300 hover:text-white transition duration-200">About & Case Studies</a>
-        <a href="contact.html" data-page="contact.html" class="text-slate-300 hover:text-white transition duration-200">Contact & Admin CRM</a>
+        <a href="contact.html" data-page="contact.html" class="text-purple-400 font-semibold transition duration-200">Contact Us</a>
       </nav>
 
       <!-- Desktop Action CTA -->
       <div class="hidden md:flex items-center gap-4">
         <a href="admin-login.html" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-2">
           <i class="fa-solid fa-lock text-purple-400"></i>
-          <span>Admin Portal</span>
+          <span>Admin Panel</span>
           <span id="nav-leads-badge" class="px-1.5 py-0.2 rounded-full text-[10px] bg-purple-600 text-white font-bold">5</span>
         </a>
       </div>
@@ -86,39 +86,34 @@
     <div id="mobile-menu" class="hidden md:hidden glass-nav border-t border-white/5 px-4 pt-3 pb-6 space-y-3">
       <a href="index.html" data-page="index.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">Home & Services</a>
       <a href="about.html" data-page="about.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">About & Case Studies</a>
-      <a href="contact.html" data-page="contact.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800/50">Contact & Admin CRM</a>
-      <button onclick="switchTab('admin')" class="w-full py-3 rounded-xl bg-purple-600/30 text-purple-300 border border-purple-500/40 text-sm font-semibold text-center mt-2 flex items-center justify-center gap-2">
+      <a href="contact.html" data-page="contact.html" class="block py-2.5 px-3 rounded-lg text-base font-medium text-purple-400 font-semibold hover:bg-slate-800/50">Contact Us</a>
+      <a href="admin-login.html" class="w-full py-3 rounded-xl bg-purple-600/30 text-purple-300 border border-purple-500/40 text-sm font-semibold text-center mt-2 flex items-center justify-center gap-2">
         <i class="fa-solid fa-lock"></i>
-        <span>Switch to Admin CRM</span>
-      </button>
+        <span>Admin Panel</span>
+      </a>
     </div>
   </header>
 
-  <!-- Page Mode Switcher / Segmented Tabs -->
-  <section class="pt-32 pb-6 bg-slate-950/40 border-b border-white/5">
+  <!-- Page Header -->
+  <section class="pt-32 pb-8 bg-slate-950/40 border-b border-white/5">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 id="page-mode-title" class="text-2xl sm:text-3xl font-extrabold font-heading text-white">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-semibold mb-2">
+            <i class="fa-solid fa-bolt text-xs"></i> Direct Studio Consultation • Response SLA &lt; 2 Hours
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-extrabold font-heading text-white">
             Connect With Bengaluru Studio
           </h1>
-          <p id="page-mode-subtitle" class="text-xs sm:text-sm text-slate-400 mt-1">
-            Schedule a high-impact creative & performance strategy session.
+          <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl">
+            Schedule a high-impact creative & performance strategy session with our growth architects.
           </p>
         </div>
 
-        <!-- Mode Toggle Tabs -->
-        <div class="inline-flex p-1.5 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
-          <button id="tab-btn-contact" onclick="switchTab('contact')" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition active bg-purple-600 text-white shadow-lg shadow-purple-500/25 flex items-center gap-2">
-            <i class="fa-solid fa-paper-plane text-xs"></i>
-            <span>Public Contact Form</span>
-          </button>
-          <button id="tab-btn-admin" onclick="switchTab('admin')" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-white transition flex items-center gap-2">
-            <i class="fa-solid fa-shield-halved text-xs text-purple-400"></i>
-            <span>Admin Lead CRM</span>
-            <span id="tab-leads-count" class="px-2 py-0.5 rounded-full text-[10px] bg-slate-800 text-purple-300 font-bold">5</span>
-          </button>
-        </div>
+        <a href="admin-login.html" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-semibold transition flex items-center gap-2 shadow">
+          <i class="fa-solid fa-shield-halved text-purple-400"></i>
+          <span>Admin Panel</span>
+        </a>
       </div>
     </div>
   </section>
@@ -312,199 +307,6 @@
     </div>
   </main>
 
-  <!-- ========================================================
-       VIEW 2: ENTERPRISE ADMIN LEAD DASHBOARD CRM
-       ======================================================== -->
-  <main id="view-admin" class="py-12 relative hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-      
-      <!-- Admin Security Unlock Modal / Banner (Demo Mode) -->
-      <div id="admin-passcode-gate" class="glass-panel p-8 rounded-3xl border border-purple-500/30 max-w-md mx-auto text-center space-y-4">
-        <div class="h-16 px-4 py-2 rounded-2xl bg-slate-900/90 border border-white/10 flex items-center justify-center mx-auto w-fit shadow-lg shadow-black/40">
-          <img src="assets/images/logo.png" alt="LYFAds Logo" class="h-10 w-auto object-contain filter drop-shadow-[0_0_8px_rgba(220,38,38,0.4)]">
-        </div>
-        <h3 class="text-2xl font-bold font-heading text-white">Enter Admin Passcode</h3>
-        <p class="text-xs text-slate-400">
-          Enter demo passcode <code class="text-purple-300 font-mono bg-purple-950/50 px-2 py-0.5 rounded">admin123</code> or click instant demo unlock.
-        </p>
-
-        <form id="admin-auth-form" class="space-y-3">
-          <input type="password" id="admin-passcode-input" placeholder="Enter admin123" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-center text-white focus:outline-none focus:border-purple-500">
-          <div class="flex gap-2">
-            <button type="submit" class="btn-primary flex-1 py-2.5 rounded-xl font-semibold text-xs text-white">
-              Authenticate
-            </button>
-            <button type="button" onclick="unlockAdminDemo()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 border border-slate-700 transition">
-              Quick Demo Unlock
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Authenticated Admin Workspace -->
-      <div id="admin-workspace" class="hidden space-y-8">
-        
-        <!-- Top Analytics KPI Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div class="glass-panel p-5 rounded-2xl border border-white/5">
-            <div class="text-xs font-semibold uppercase text-slate-400">Total Leads</div>
-            <div id="stat-total" class="text-2xl sm:text-3xl font-black font-heading text-white mt-1">0</div>
-            <div class="text-[10px] text-slate-500 mt-1">All time in CRM</div>
-          </div>
-
-          <div class="glass-panel p-5 rounded-2xl border border-indigo-500/20 bg-indigo-950/10">
-            <div class="text-xs font-semibold uppercase text-indigo-400">New Leads</div>
-            <div id="stat-new" class="text-2xl sm:text-3xl font-black font-heading text-indigo-300 mt-1">0</div>
-            <div class="text-[10px] text-indigo-400/80 mt-1">Pending first contact</div>
-          </div>
-
-          <div class="glass-panel p-5 rounded-2xl border border-amber-500/20 bg-amber-950/10">
-            <div class="text-xs font-semibold uppercase text-amber-400">In Progress</div>
-            <div id="stat-progress" class="text-2xl sm:text-3xl font-black font-heading text-amber-300 mt-1">0</div>
-            <div class="text-[10px] text-amber-400/80 mt-1">Active negotiation</div>
-          </div>
-
-          <div class="glass-panel p-5 rounded-2xl border border-emerald-500/20 bg-emerald-950/10">
-            <div class="text-xs font-semibold uppercase text-emerald-400">Closed / Won</div>
-            <div id="stat-closed" class="text-2xl sm:text-3xl font-black font-heading text-emerald-300 mt-1">0</div>
-            <div class="text-[10px] text-emerald-400/80 mt-1">Signed retainer deals</div>
-          </div>
-
-          <div class="glass-panel p-5 rounded-2xl border border-cyan-500/20 bg-cyan-950/10 col-span-2 md:col-span-1">
-            <div class="text-xs font-semibold uppercase text-cyan-400">Est. Pipeline</div>
-            <div id="stat-pipeline" class="text-xl sm:text-2xl font-black font-heading text-cyan-300 mt-1">₹0</div>
-            <div class="text-[10px] text-cyan-400/80 mt-1">Weighted budget value</div>
-          </div>
-        </div>
-
-        <!-- CRM Toolbar & Data Management -->
-        <div class="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-          
-          <!-- Filters & Search -->
-          <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
-            <div class="relative w-full sm:w-60">
-              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-              <input type="text" id="admin-search" placeholder="Search leads, company, phone..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500">
-            </div>
-
-            <select id="admin-status-filter" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500">
-              <option value="all">All Statuses</option>
-              <option value="New Lead">New Lead</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Closed">Closed</option>
-            </select>
-          </div>
-
-          <!-- Export & Data Action Buttons -->
-          <div class="flex items-center gap-2.5 w-full md:w-auto justify-end">
-            <button onclick="exportCRMData('csv')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5 shadow">
-              <i class="fa-solid fa-file-csv text-emerald-400"></i>
-              <span>Export CSV</span>
-            </button>
-            <button onclick="exportCRMData('json')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center gap-1.5 shadow">
-              <i class="fa-solid fa-file-code text-cyan-400"></i>
-              <span>Export JSON</span>
-            </button>
-            <button onclick="resetDefaultLeads()" title="Restore sample Bengaluru leads" class="p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-700 text-xs transition">
-              <i class="fa-solid fa-rotate text-xs"></i>
-            </button>
-          </div>
-
-        </div>
-
-        <!-- Leads Table Container -->
-        <div class="glass-panel rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-slate-300">
-              <thead class="bg-slate-900/90 text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
-                <tr>
-                  <th class="p-4">Date</th>
-                  <th class="p-4">Prospect & Company</th>
-                  <th class="p-4">Contact Info</th>
-                  <th class="p-4">Service & Budget</th>
-                  <th class="p-4">Status Workflow</th>
-                  <th class="p-4 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="admin-leads-tbody" class="divide-y divide-slate-800/60">
-                <!-- Injected via JavaScript -->
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Empty State -->
-          <div id="admin-table-empty" class="hidden text-center py-16">
-            <i class="fa-solid fa-inbox text-4xl text-slate-600 mb-3"></i>
-            <h4 class="text-base font-bold text-white">No leads match your criteria</h4>
-            <p class="text-xs text-slate-400 mt-1">Try clearing your search query or reset seed data.</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </main>
-
-  <!-- Lead Detail Modal for Admin -->
-  <div id="lead-detail-modal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
-    <div class="modal-container glass-panel w-full max-w-lg rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl space-y-6">
-      <div class="flex justify-between items-start">
-        <div>
-          <span id="detail-lead-status-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-            New Lead
-          </span>
-          <h3 id="detail-lead-name" class="text-2xl font-bold font-heading text-white mt-1.5">Prospect Name</h3>
-          <p id="detail-lead-company" class="text-xs text-purple-400 font-semibold">Company Name</p>
-        </div>
-        <button onclick="closeLeadDetailModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800/50 hover:bg-slate-800 transition">
-          <i class="fa-solid fa-xmark text-lg"></i>
-        </button>
-      </div>
-
-      <div class="space-y-3 p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
-        <div class="flex justify-between py-1 border-b border-slate-800/50">
-          <span class="text-slate-400">Email:</span>
-          <span id="detail-lead-email" class="text-white font-medium select-all"></span>
-        </div>
-        <div class="flex justify-between py-1 border-b border-slate-800/50">
-          <span class="text-slate-400">Phone:</span>
-          <span id="detail-lead-phone" class="text-white font-medium select-all"></span>
-        </div>
-        <div class="flex justify-between py-1 border-b border-slate-800/50">
-          <span class="text-slate-400">Service:</span>
-          <span id="detail-lead-service" class="text-white font-medium"></span>
-        </div>
-        <div class="flex justify-between py-1 border-b border-slate-800/50">
-          <span class="text-slate-400">Budget:</span>
-          <span id="detail-lead-budget" class="text-emerald-400 font-bold"></span>
-        </div>
-        <div class="flex justify-between py-1 border-b border-slate-800/50">
-          <span class="text-slate-400">Timeline:</span>
-          <span id="detail-lead-timeline" class="text-white font-medium"></span>
-        </div>
-        <div class="flex justify-between py-1">
-          <span class="text-slate-400">Lead Source:</span>
-          <span id="detail-lead-source" class="text-purple-300 font-medium"></span>
-        </div>
-      </div>
-
-      <div>
-        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Project Message & Requirements</h4>
-        <div id="detail-lead-message" class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-300 leading-relaxed whitespace-pre-wrap"></div>
-      </div>
-
-      <!-- Quick Contact Actions -->
-      <div class="flex gap-2.5 pt-2">
-        <a id="detail-lead-mailto" href="#" class="btn-primary py-2.5 px-4 rounded-xl font-semibold text-xs text-white text-center flex-1 flex items-center justify-center gap-1.5">
-          <i class="fa-solid fa-envelope"></i> Send Email
-        </a>
-        <a id="detail-lead-tel" href="#" class="py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold text-xs text-white text-center flex-1 flex items-center justify-center gap-1.5 transition">
-          <i class="fa-solid fa-phone"></i> Call Phone
-        </a>
-      </div>
-    </div>
-  </div>
-
   <!-- Global Footer -->
   <footer class="bg-[#030712] border-t border-slate-900 py-16 text-slate-400 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -535,7 +337,7 @@
           <li><a href="about.html" class="hover:text-purple-400 transition">About Bengaluru Studio</a></li>
           <li><a href="about.html#case-studies" class="hover:text-purple-400 transition">Case Studies Portfolio</a></li>
           <li><a href="contact.html" class="hover:text-purple-400 transition">Contact Us & Consultation</a></li>
-          <li><a href="admin-login.html" class="hover:text-cyan-400 transition">Enterprise Admin CRM</a></li>
+          <li><a href="admin-login.html" class="hover:text-cyan-400 transition">Admin Panel</a></li>
         </ul>
       </div>
 
@@ -545,7 +347,7 @@
         <ul class="space-y-2 text-xs">
           <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">Paid Media & Performance Ads</a></li>
           <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">Cinematic Video & Ad Films</a></li>
-          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">AI SDR Bots & Automation</a></li>
+          <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">3D Vector & Logo Identity</a></li>
           <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">3D CGI & Motion Design</a></li>
           <li><a href="index.html#services-grid" class="hover:text-purple-400 transition">Technical SEO & Programmatic</a></li>
         </ul>
@@ -570,7 +372,7 @@
       <div class="flex items-center gap-4">
         <a href="https://www.lyfads.com/" target="_blank" rel="noopener" class="hover:text-slate-400 transition">Official Global Reference</a>
         <span>•</span>
-        <a href="admin-login.html" class="hover:text-indigo-400 transition">Admin Portal</a>
+        <a href="admin-login.html" class="hover:text-indigo-400 transition">Admin Panel</a>
       </div>
     </div>
   </footer>
@@ -581,235 +383,8 @@
   <script src="assets/js/illusions.js"></script>
   <script src="assets/js/app.js"></script>
 
-  <!-- Contact & Admin Lead CRM Controller -->
+  <!-- Contact Form Controller -->
   <script>
-    let currentTab = 'contact';
-    let isAdminUnlocked = false;
-
-    // Switch between Public Contact View and Admin CRM Portal
-    function switchTab(tab) {
-      currentTab = tab;
-      const viewContact = document.getElementById('view-contact');
-      const viewAdmin = document.getElementById('view-admin');
-      const btnContact = document.getElementById('tab-btn-contact');
-      const btnAdmin = document.getElementById('tab-btn-admin');
-      const title = document.getElementById('page-mode-title');
-      const subtitle = document.getElementById('page-mode-subtitle');
-
-      if (tab === 'admin') {
-        viewContact.classList.add('hidden');
-        viewAdmin.classList.remove('hidden');
-        btnAdmin.classList.add('bg-purple-600', 'text-white', 'shadow-lg');
-        btnAdmin.classList.remove('text-slate-400');
-        btnContact.classList.remove('bg-purple-600', 'text-white', 'shadow-lg');
-        btnContact.classList.add('text-slate-400');
-
-        title.textContent = 'Enterprise Admin Lead CRM';
-        subtitle.textContent = 'Real-time pipeline monitoring, status workflows, and export management.';
-
-        checkAdminAuth();
-      } else {
-        viewAdmin.classList.add('hidden');
-        viewContact.classList.remove('hidden');
-        btnContact.classList.add('bg-purple-600', 'text-white', 'shadow-lg');
-        btnContact.classList.remove('text-slate-400');
-        btnAdmin.classList.remove('bg-purple-600', 'text-white', 'shadow-lg');
-        btnAdmin.classList.add('text-slate-400');
-
-        title.textContent = 'Connect With Bengaluru Studio';
-        subtitle.textContent = 'Schedule a high-impact creative & performance strategy session.';
-      }
-    }
-
-    // Admin Auth
-    function checkAdminAuth() {
-      const gate = document.getElementById('admin-passcode-gate');
-      const workspace = document.getElementById('admin-workspace');
-      
-      if (sessionStorage.getItem('lyfads_admin_session') === 'true' || isAdminUnlocked) {
-        gate.classList.add('hidden');
-        workspace.classList.remove('hidden');
-        renderAdminDashboard();
-      } else {
-        gate.classList.remove('hidden');
-        workspace.classList.add('hidden');
-      }
-    }
-
-    function unlockAdminDemo() {
-      sessionStorage.setItem('lyfads_admin_session', 'true');
-      isAdminUnlocked = true;
-      checkAdminAuth();
-      showToast('Admin session authenticated successfully.', 'success');
-    }
-
-    // Export Handler
-    function exportCRMData(type) {
-      if (!window.lyfadsStorage) return;
-      if (type === 'csv') {
-        window.lyfadsStorage.exportToCSV();
-        showToast('Exported leads to CSV.', 'success');
-      } else {
-        window.lyfadsStorage.exportToJSON();
-        showToast('Exported leads snapshot to JSON.', 'success');
-      }
-    }
-
-    // Reset default seed leads
-    function resetDefaultLeads() {
-      if (confirm('Reset CRM to default Bengaluru seed leads?')) {
-        window.lyfadsStorage.resetToDefaults();
-        renderAdminDashboard();
-        showToast('Reset to default seed leads.', 'info');
-      }
-    }
-
-    // Render Admin CRM Table & Analytics
-    function renderAdminDashboard() {
-      if (!window.lyfadsStorage) return;
-
-      const leads = window.lyfadsStorage.getLeads();
-      const analytics = window.lyfadsStorage.getAnalytics();
-
-      // Update KPI counters
-      document.getElementById('stat-total').textContent = analytics.total;
-      document.getElementById('stat-new').textContent = analytics.newLeads;
-      document.getElementById('stat-progress').textContent = analytics.inProgress;
-      document.getElementById('stat-closed').textContent = analytics.closed;
-      document.getElementById('stat-pipeline').textContent = '₹' + (analytics.pipelineEstimate / 100000).toFixed(1) + 'L';
-
-      // Update badge counters
-      const navBadge = document.getElementById('nav-leads-badge');
-      const tabBadge = document.getElementById('tab-leads-count');
-      if (navBadge) navBadge.textContent = analytics.total;
-      if (tabBadge) tabBadge.textContent = analytics.total;
-
-      const searchInput = document.getElementById('admin-search');
-      const statusFilter = document.getElementById('admin-status-filter');
-      const query = (searchInput?.value || '').toLowerCase().trim();
-      const statusVal = statusFilter?.value || 'all';
-
-      let filtered = leads;
-      if (statusVal !== 'all') {
-        filtered = filtered.filter(l => l.status === statusVal);
-      }
-      if (query) {
-        filtered = filtered.filter(l => 
-          l.fullName.toLowerCase().includes(query) ||
-          l.company.toLowerCase().includes(query) ||
-          l.email.toLowerCase().includes(query) ||
-          l.phone.toLowerCase().includes(query) ||
-          l.service.toLowerCase().includes(query)
-        );
-      }
-
-      const tbody = document.getElementById('admin-leads-tbody');
-      const emptyState = document.getElementById('admin-table-empty');
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = '';
-        emptyState.classList.remove('hidden');
-        return;
-      }
-
-      emptyState.classList.add('hidden');
-      tbody.innerHTML = filtered.map(lead => {
-        let statusBadgeClass = 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40';
-        if (lead.status === 'In Progress') statusBadgeClass = 'bg-amber-500/20 text-amber-300 border-amber-500/40';
-        if (lead.status === 'Closed') statusBadgeClass = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
-
-        const dateStr = new Date(lead.createdAt).toLocaleDateString('en-IN', {
-          day: 'numeric',
-          month: 'short',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-
-        return `
-          <tr class="hover:bg-slate-800/40 transition">
-            <td class="p-4 whitespace-nowrap text-slate-400 font-mono text-[11px]">
-              ${dateStr}
-            </td>
-            <td class="p-4">
-              <div class="font-bold text-white text-sm">${lead.fullName}</div>
-              <div class="text-xs text-purple-400 font-semibold">${lead.company}</div>
-            </td>
-            <td class="p-4">
-              <div class="text-slate-300 select-all">${lead.email}</div>
-              <div class="text-slate-400 select-all font-mono text-[11px]">${lead.phone}</div>
-            </td>
-            <td class="p-4">
-              <div class="text-white font-medium">${lead.service}</div>
-              <div class="text-[11px] text-emerald-400 font-bold">${lead.budget}</div>
-            </td>
-            <td class="p-4">
-              <select onchange="updateLeadWorkflow('${lead.id}', this.value)" class="bg-slate-900 border text-xs rounded-lg px-2.5 py-1 font-semibold focus:outline-none ${statusBadgeClass}">
-                <option value="New Lead" ${lead.status === 'New Lead' ? 'selected' : ''}>New Lead</option>
-                <option value="In Progress" ${lead.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
-                <option value="Closed" ${lead.status === 'Closed' ? 'selected' : ''}>Closed</option>
-              </select>
-            </td>
-            <td class="p-4 text-right whitespace-nowrap space-x-2">
-              <button onclick="inspectLead('${lead.id}')" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition" title="Inspect Lead">
-                <i class="fa-solid fa-eye text-xs"></i>
-              </button>
-              <button onclick="removeLead('${lead.id}')" class="p-1.5 rounded-lg bg-slate-800 hover:bg-rose-900/60 text-slate-400 hover:text-rose-400 transition" title="Delete Lead">
-                <i class="fa-solid fa-trash text-xs"></i>
-              </button>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    // Lead Status Workflow Update
-    function updateLeadWorkflow(id, newStatus) {
-      if (window.lyfadsStorage) {
-        window.lyfadsStorage.updateLeadStatus(id, newStatus);
-        showToast(`Lead status updated to '${newStatus}'.`, 'info');
-      }
-    }
-
-    // Delete Lead
-    function removeLead(id) {
-      if (confirm('Permanently delete this lead?')) {
-        if (window.lyfadsStorage) {
-          window.lyfadsStorage.deleteLead(id);
-          showToast('Lead deleted from CRM.', 'info');
-        }
-      }
-    }
-
-    // Inspect Lead Modal
-    function inspectLead(id) {
-      if (!window.lyfadsStorage) return;
-      const lead = window.lyfadsStorage.getLeadById(id);
-      if (!lead) return;
-
-      document.getElementById('detail-lead-name').textContent = lead.fullName;
-      document.getElementById('detail-lead-company').textContent = lead.company;
-      document.getElementById('detail-lead-status-badge').textContent = lead.status;
-      document.getElementById('detail-lead-email').textContent = lead.email;
-      document.getElementById('detail-lead-phone').textContent = lead.phone;
-      document.getElementById('detail-lead-service').textContent = lead.service;
-      document.getElementById('detail-lead-budget').textContent = lead.budget;
-      document.getElementById('detail-lead-timeline').textContent = lead.timeline;
-      document.getElementById('detail-lead-source').textContent = lead.source || 'Website Contact Form';
-      document.getElementById('detail-lead-message').textContent = lead.message || 'No specific notes provided.';
-
-      document.getElementById('detail-lead-mailto').href = `mailto:${lead.email}?subject=LYFAds%20Bengaluru%20-%20Follow-up%20on%20${encodeURIComponent(lead.service)}`;
-      document.getElementById('detail-lead-tel').href = `tel:${lead.phone}`;
-
-      const modal = document.getElementById('lead-detail-modal');
-      modal.classList.remove('hidden');
-    }
-
-    function closeLeadDetailModal() {
-      const modal = document.getElementById('lead-detail-modal');
-      modal.classList.add('hidden');
-    }
-
-    // Public Contact Form Handler
     document.addEventListener('DOMContentLoaded', () => {
       'use strict';
 
@@ -855,7 +430,7 @@
             fullName,
             email,
             phone,
-            company,
+            company: company || 'Direct Client',
             service: formData.get('service')?.toString() || 'General Consultation',
             budget: formData.get('budget')?.toString() || '₹5L - ₹10L / month',
             timeline: 'Immediate',
@@ -872,56 +447,25 @@
         });
       }
 
-      // Admin Auth Form
-      const authForm = document.getElementById('admin-auth-form');
-      if (authForm) {
-        authForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const pwd = document.getElementById('admin-passcode-input').value.trim();
-          if (pwd === 'admin123') {
-            unlockAdminDemo();
-          } else {
-            showToast('Invalid passcode. Use admin123.', 'error');
-          }
-        });
+      // Check URL Query Param: ?service=...
+      const urlParams = new URLSearchParams(window.location.search);
+      const serviceParam = urlParams.get('service');
+      if (serviceParam && contactForm && contactForm.service) {
+        contactForm.service.value = serviceParam;
       }
 
-      // Real-time Event Subscriptions
-      window.addEventListener('lyfads:lead_created', () => {
-        renderAdminDashboard();
-      });
-      window.addEventListener('lyfads:lead_updated', () => {
-        renderAdminDashboard();
-      });
-      window.addEventListener('lyfads:lead_deleted', () => {
-        renderAdminDashboard();
-      });
-
-      // Filter & Search input bindings
-      const adminSearch = document.getElementById('admin-search');
-      const adminFilter = document.getElementById('admin-status-filter');
-      if (adminSearch) adminSearch.addEventListener('input', renderAdminDashboard);
-      if (adminFilter) adminFilter.addEventListener('change', renderAdminDashboard);
-
-      // Check URL Query Param: ?tab=admin or ?service=...
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('tab') === 'admin') {
-        switchTab('admin');
-      } else {
-        const serviceParam = urlParams.get('service');
-        if (serviceParam && contactForm && contactForm.service) {
-          contactForm.service.value = serviceParam;
-        }
-
-        // Update badge counts initially
+      // Sync badge count
+      function updateNavBadge() {
         if (window.lyfadsStorage) {
           const analytics = window.lyfadsStorage.getAnalytics();
           const navBadge = document.getElementById('nav-leads-badge');
-          const tabBadge = document.getElementById('tab-leads-count');
           if (navBadge) navBadge.textContent = analytics.total;
-          if (tabBadge) tabBadge.textContent = analytics.total;
         }
       }
+
+      updateNavBadge();
+      window.addEventListener('lyfads:lead_created', updateNavBadge);
+      window.addEventListener('lyfads:leads_synced', updateNavBadge);
     });
   </script>
 </body>

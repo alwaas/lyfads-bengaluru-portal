@@ -56,20 +56,28 @@ This web application represents a production-grade, highly responsive, fast, sec
 - **5-Step Growth Engine Framework**: Interactive visual roadmap (Forensic Audit -> Hook Filming -> Algorithmic Launch -> Funnel CRO -> Full-Funnel Scaling).
 - **Studio & Gear Showcase**: 4,500 sq.ft Koramangala facility with 6K RAW camera rigs, cyclorama walls, and NVIDIA RTX 4090 CGI render nodes.
 
-### 3. Page 3: Contact & Enterprise Admin CRM (`contact.html`)
-- **Dual-Mode Segmented Control**: Switch seamlessly between **Public Contact View** and **Enterprise Admin Lead Dashboard**.
-- **Public Contact Experience**:
-  - Validated multi-step inquiry form with email and phone regex checks.
-  - Studio physical address, instant WhatsApp chat trigger, and direct call action.
-  - FAQ accordion covering launch SLAs and retainer structures.
-- **Embedded Enterprise Admin Lead CRM**:
-  - Passcode authentication (`admin123` or instant demo unlock).
+### 3. Page 3: Contact Us (`contact.html`)
+- **Public Consultation Experience**:
+  - Validated inquiry form with email and phone regex checks.
+  - Studio physical address (Koramangala 5th Block, Bengaluru), instant WhatsApp chat trigger, and direct call action.
+  - FAQ accordion covering launch SLAs (< 2 hours response SLA) and retainer structures.
+  - Automatic URL query parameter pre-selection (`?service=...`) when referred from the 20 Services Grid.
+
+### 4. Dedicated Enterprise Admin Panel (`admin-login.html` & `admin.html`)
+- **Multi-Admin Role-Based Authentication**:
+  - Secure credential authentication for Super Admin, Growth Director, and Sales Lead.
+  - Privacy-preserving login interface (passwords never revealed on screen or demo buttons).
+- **Real-Time Multi-Device Sync Engine**:
+  - Triple-redundant real-time synchronization: Server-Sent Events (SSE) `/api/leads/stream` + 2.5s smart polling fallback + cross-tab BroadcastChannel.
+  - When an inquiry is submitted from any browser or device, all connected Admin Panels immediately update with live row insertion, audio chimes, and instant notification alerts.
+- **Admin Lead Operations**:
   - Real-time pipeline KPI metrics: Total Leads, New Leads, In Progress, Closed, and Estimated Pipeline Value.
   - Dynamic status workflow selector (*New Lead -> In Progress -> Closed*).
-  - Search and filter by status.
+  - Search and filter by status and capability.
   - Full lead inspection modal with direct `mailto:` and `tel:` triggers.
   - Instant **Export to CSV** and **Export to JSON** capabilities.
-  - Seamless real-time DOM synchronization across all pages.
+- **Instant Admin Email Notification Dispatch Desk**:
+  - Direct alert engine notifying registered team emails (`leads@lyfads.com`, `director@lyfads.com`, etc.) on every new inbound client inquiry.
 
 ---
 

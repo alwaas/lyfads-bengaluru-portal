@@ -108,6 +108,9 @@ function broadcastEvent(type, payload) {
   sseClients.forEach(client => {
     try {
       client.res.write(`data: ${data}\n\n`);
+      if (typeof client.res.flush === 'function') {
+        client.res.flush();
+      }
     } catch (e) {
       // dead client
     }
@@ -117,10 +120,14 @@ function broadcastEvent(type, payload) {
 app.get('/api/leads/stream', (req, res) => {
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
+    'Cache-Control': 'no-cache, no-transform',
     'Connection': 'keep-alive',
+    'X-Accel-Buffering': 'no',
     'Access-Control-Allow-Origin': '*'
   });
+  if (typeof res.flushHeaders === 'function') {
+    res.flushHeaders();
+  }
 
   const clientId = Date.now() + '_' + Math.random().toString(36).substr(2, 5);
   const newClient = { id: clientId, res };
@@ -129,10 +136,15 @@ app.get('/api/leads/stream', (req, res) => {
   // Send initial handshake
   res.write(`data: ${JSON.stringify({ type: 'lyfads:connected', clientId })}\n\n`);
 
-  // Heartbeat ping every 25s
+  // Heartbeat ping every 15s to keep connections alive through proxies
   const heartbeat = setInterval(() => {
-    res.write(': heartbeat\n\n');
-  }, 25000);
+    try {
+      res.write(': heartbeat\n\n');
+      if (typeof res.flush === 'function') res.flush();
+    } catch (e) {
+      clearInterval(heartbeat);
+    }
+  }, 15000);
 
   req.on('close', () => {
     clearInterval(heartbeat);
@@ -250,8 +262,8 @@ app.post('/api/leads', async (req, res) => {
 
     const data = db.get();
     const newLead = {
-      id: 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
-      createdAt: new Date().toISOString(),
+      id: (body.id && typeof body.id === 'string' && body.id.startsWith('lead_')) ? body.id : ('lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6)),
+      createdAt: (body.createdAt && !isNaN(Date.parse(body.createdAt))) ? body.createdAt : new Date().toISOString(),
       fullName,
       email,
       phone,
@@ -260,7 +272,7 @@ app.post('/api/leads', async (req, res) => {
       budget: db.sanitize(body.budget || 'Flexible'),
       timeline: db.sanitize(body.timeline || 'Immediate'),
       message: db.sanitize(body.message || ''),
-      status: 'New Lead',
+      status: body.status || 'New Lead',
       source: db.sanitize(body.source || 'Website Contact Form')
     };
 
@@ -609,3 +621,4 @@ const server = app.listen(PORT, () => {
 });
 
 module.exports = { app, server, db };
+

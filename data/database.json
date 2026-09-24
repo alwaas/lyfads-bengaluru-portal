@@ -1,16 +1,16 @@
 {
   "leads": [
     {
-      "id": "lead_1790230259421_hqrshu",
-      "createdAt": "2026-09-24T06:10:59.421Z",
-      "fullName": "Rohan Sharma Enterprise",
-      "email": "rohan@bengalurulabs.io",
-      "phone": "+91 98450 77777",
-      "company": "Bengaluru Labs",
-      "service": "Brand Identity &amp; Logo Design",
-      "budget": "₹10L - ₹25L &#x2F; month",
+      "id": "lead_1790249482538_pxmigd",
+      "createdAt": "2026-09-24T11:31:22.538Z",
+      "fullName": "Nikhil Reddy",
+      "email": "nikhil@techcorp.in",
+      "phone": "+91 99887 76655",
+      "company": "TechCorp AI",
+      "service": "Search Engine Optimization (SEO &amp; Technical Audits)",
+      "budget": "?5L - ?10L &#x2F; month",
       "timeline": "Immediate",
-      "message": "Testing central multi-device database and email dispatch desk.",
+      "message": "Need live multi-device test verification",
       "status": "New Lead",
       "source": "Website Contact Form"
     },
@@ -135,6 +135,21 @@
       }
     ],
     "logs": [
+      {
+        "id": "notif_1790249482551_3gvfw",
+        "timestamp": "2026-09-24T11:31:22.551Z",
+        "leadId": "lead_1790249482538_pxmigd",
+        "clientName": "Nikhil Reddy",
+        "clientCompany": "TechCorp AI",
+        "service": "Search Engine Optimization (SEO &amp; Technical Audits)",
+        "recipients": [
+          "leads@lyfads.com",
+          "director@lyfads.com"
+        ],
+        "status": "Delivered",
+        "subject": "🚨 [NEW LEAD] TechCorp AI - Search Engine Optimization (SEO &amp; Technical Audits)",
+        "summary": "Nikhil Reddy (TechCorp AI) requested \"Search Engine Optimization (SEO &amp; Technical Audits)\". Phone: +91 99887 76655, Budget: ?5L - ?10L &#x2F; month"
+      },
       {
         "id": "notif_log_01",
         "timestamp": "2026-09-24T08:30:05.000Z",
