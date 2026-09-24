@@ -227,7 +227,7 @@
         height: 450px;
         border-radius: 50%;
         pointer-events: none;
-        background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(6, 182, 212, 0.03) 50%, transparent 75%);
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(6, 182, 212, 0.03) 50%, transparent 70%);
         transform: translate(-50%, -50%);
         z-index: 0;
         transition: opacity 0.3s ease;

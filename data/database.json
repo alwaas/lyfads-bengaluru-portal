@@ -1,6 +1,34 @@
 {
   "leads": [
     {
+      "id": "lead_1790256685190_8pp6j",
+      "createdAt": "2026-09-24T13:31:25.190Z",
+      "fullName": "Newhhvjhk",
+      "email": "bvhvvgjs@gmail.com",
+      "phone": "6795575546",
+      "company": "vgvh",
+      "service": "Performance Marketing &amp;amp; Paid Ads",
+      "budget": "₹5L - ₹10L &amp;#x2F; month",
+      "timeline": "Immediate (Within 7 days)",
+      "message": "",
+      "status": "New Lead",
+      "source": "Service Modal"
+    },
+    {
+      "id": "lead_1790255694932_d6syu",
+      "createdAt": "2026-09-24T13:14:54.932Z",
+      "fullName": "nsdmc",
+      "email": "njjdjh@gdcsco.com",
+      "phone": "34283759r67",
+      "company": "gvc",
+      "service": "Performance Marketing &amp;amp; Paid Ads",
+      "budget": "₹5L - ₹10L &amp;#x2F; month",
+      "timeline": "Immediate (Within 7 days)",
+      "message": "",
+      "status": "New Lead",
+      "source": "Service Modal"
+    },
+    {
       "id": "lead_1790249482538_pxmigd",
       "createdAt": "2026-09-24T11:31:22.538Z",
       "fullName": "Nikhil Reddy",
@@ -115,6 +143,16 @@
       "role": "Sales Lead",
       "createdAt": "2026-02-01T00:00:00.000Z",
       "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=sales"
+    },
+    {
+      "id": "admin_1790255864103_dwckg",
+      "name": "Lyfads",
+      "email": "test@lyfads.com",
+      "username": "test",
+      "password": "test1234",
+      "role": "Sales Lead",
+      "createdAt": "2026-09-24T13:17:44.103Z",
+      "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=test"
     }
   ],
   "notifications": {
@@ -135,6 +173,36 @@
       }
     ],
     "logs": [
+      {
+        "id": "notif_1790256685218_o27rb",
+        "timestamp": "2026-09-24T13:31:25.218Z",
+        "leadId": "lead_1790256685190_8pp6j",
+        "clientName": "Newhhvjhk",
+        "clientCompany": "vgvh",
+        "service": "Performance Marketing &amp;amp; Paid Ads",
+        "recipients": [
+          "leads@lyfads.com",
+          "director@lyfads.com"
+        ],
+        "status": "Delivered",
+        "subject": "🚨 [NEW LEAD] vgvh - Performance Marketing &amp;amp; Paid Ads",
+        "summary": "Newhhvjhk (vgvh) requested \"Performance Marketing &amp;amp; Paid Ads\". Phone: 6795575546, Budget: ₹5L - ₹10L &amp;#x2F; month"
+      },
+      {
+        "id": "notif_1790255694955_sajpu",
+        "timestamp": "2026-09-24T13:14:54.955Z",
+        "leadId": "lead_1790255694932_d6syu",
+        "clientName": "nsdmc",
+        "clientCompany": "gvc",
+        "service": "Performance Marketing &amp;amp; Paid Ads",
+        "recipients": [
+          "leads@lyfads.com",
+          "director@lyfads.com"
+        ],
+        "status": "Delivered",
+        "subject": "🚨 [NEW LEAD] gvc - Performance Marketing &amp;amp; Paid Ads",
+        "summary": "nsdmc (gvc) requested \"Performance Marketing &amp;amp; Paid Ads\". Phone: 34283759r67, Budget: ₹5L - ₹10L &amp;#x2F; month"
+      },
       {
         "id": "notif_1790249482551_3gvfw",
         "timestamp": "2026-09-24T11:31:22.551Z",
