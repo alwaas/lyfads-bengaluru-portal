@@ -25,6 +25,10 @@ const requiredFiles = [
   'index.html',
   'about.html',
   'contact.html',
+  'admin-login.html',
+  'admin.html',
+  'server.js',
+  'data/database.json',
   'progress.md',
   'docs/SRS.md',
   'docs/ARCHITECTURE.md',
@@ -200,6 +204,15 @@ assert(analytics.pipelineEstimate > 0, `Analytics pipeline estimate calculated (
 const deleted = storageInstance.deleteLead(testLead.id);
 assert(deleted === true, 'Test lead successfully deleted');
 assert(storageInstance.getLeadById(testLead.id) === null, 'Deleted lead no longer in storage');
+
+console.log('\n=== 7. CENTRAL DATABASE & NOTIFICATION DISPATCH ENGINE ===');
+const dbRaw = fs.readFileSync(path.join(ROOT, 'data/database.json'), 'utf8');
+const dbData = JSON.parse(dbRaw);
+assert(Array.isArray(dbData.leads) && dbData.leads.length >= 5, `Central DB contains persistent leads (${dbData.leads?.length})`);
+assert(Array.isArray(dbData.admins) && dbData.admins.length >= 3, `Central DB contains multi-admin credentials (${dbData.admins?.length})`);
+assert(Array.isArray(dbData.notifications?.recipients) && dbData.notifications.recipients.length >= 2, `Central DB contains registered notification email recipients (${dbData.notifications?.recipients?.length})`);
+assert(dbData.notifications.recipients.some(r => r.email === 'leads@lyfads.com'), 'LYFAds leads desk email registered for instant alerts');
+assert(dbData.notifications.recipients.some(r => r.email === 'director@lyfads.com'), 'LYFAds studio director email registered for instant alerts');
 
 console.log('\n=========================================');
 console.log(`TOTAL TESTS: ${passed + failed} | PASSED: ${passed} | FAILED: ${failed}`);

@@ -1,0 +1,28 @@
+{
+  "name": "lyfads-bengaluru-portal",
+  "version": "1.0.0",
+  "description": "> **Official Agency Reference:** [LYFAds Global](https://www.lyfads.com/)   > **Location:** Koramangala 5th Block, Bengaluru, Karnataka, India   > **Tech Stack:** 100% Free & Open-Source (HTML5, Tailwind CSS via CDN, Vanilla JS ES6+, FontAwesome 6, Lucide Icons, Web Storage API, Canvas 2D API). Zero paid APIs or runtime dependencies required.",
+  "main": "test-integrity.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test-integrity.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alwaas/lyfads-bengaluru-portal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alwaas/lyfads-bengaluru-portal/issues"
+  },
+  "homepage": "https://github.com/alwaas/lyfads-bengaluru-portal#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

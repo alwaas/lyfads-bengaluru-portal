@@ -127,20 +127,21 @@ d:\Projects\lyfads-bengaluru-portal\
 
 Since this web application uses 100% standard web technologies with no compilation or build steps, you can run it immediately with any static server or open files directly in your browser:
 
-### Option A: Using Node.js (Built-in)
+### Option A: Using Enterprise Node.js Backend Server (Recommended)
 ```bash
-npx serve .
+npm start
 # or
-node -e "const http=require('http'),fs=require('fs'),path=require('path');http.createServer((req,res)=>{let f=req.url==='/'?'index.html':req.url.slice(1).split('?')[0];if(fs.existsSync(f)&&fs.statSync(f).isFile()){res.writeHead(200);res.end(fs.readFileSync(f));}else{res.writeHead(404);res.end('Not Found');}}).listen(8080,()=>console.log('LYFAds Bengaluru running at http://localhost:8080'));"
+node server.js
 ```
+- **Local URL**: `http://localhost:3000`
+- **Mobile Access**: Prints local LAN IP (e.g. `http://192.168.x.x:3000`) so you can access directly from your smartphone or tablet!
+- **Admin Login**: `http://localhost:3000/admin-login.html`
+- **Admin Dashboard**: `http://localhost:3000/admin.html`
+- **Permanent Database**: Stored in `data/database.json` with thread-safe atomic writes.
+- **Real-Time Stream**: Live Server-Sent Events (SSE) active at `/api/leads/stream`.
 
-### Option B: Using Python
-```bash
-python -m http.server 8080
-```
-
-### Option C: Direct Browser Launch
-Simply double click `index.html` to open it in Chrome, Edge, Safari, or Firefox!
+### Option B: Direct Static Browser Launch
+Simply double click `index.html` or open via any static server! The client automatically operates in hybrid mode with offline local resilience.
 
 ---
 
@@ -148,17 +149,25 @@ Simply double click `index.html` to open it in Chrome, Edge, Safari, or Firefox!
 
 To run the automated verification test suite:
 ```bash
+npm test
+# or
 node test-integrity.js
 ```
 Expected output:
 ```
-TOTAL TESTS: 55 | PASSED: 55 | FAILED: 0
+TOTAL TESTS: 64 | PASSED: 64 | FAILED: 0
 ```
 
 ---
 
-## 🔑 Admin CRM Demo Access
-- **URL**: `contact.html?tab=admin` or click **Admin Portal** in navigation.
-- **Passcode**: `admin123` (or click **Quick Demo Unlock**).
-- **Features**: Status workflow updates, search & filter, lead details, CSV/JSON export, seed reset.
+## 🔑 Multi-Admin Credentials & Notification Desk
+
+| Role | Username / Email | Password | Access Level |
+|---|---|---|---|
+| **Super Admin** | `admin` / `admin@lyfads.com` | `admin123` | Full CRM, Email Notifications, Team Management |
+| **Growth Director** | `growth` / `bengaluru@lyfads.com` | `lyfads2026` | Lead Statuses, Pitch Notes, Pipeline Analytics |
+| **Sales Lead** | `sales` / `sales@lyfads.com` | `sales123` | Direct Inbound Lead Outreach & Inspections |
+
+- **Instant Email Alerts**: Registered admin emails in the Notification Desk receive automated lead summaries whenever an enquiry or contact form is submitted on any device.
+- **Live Sound Chimes**: Built-in Web Audio API synthesizer triggers instant chimes upon incoming leads without requiring any third-party audio assets.
 

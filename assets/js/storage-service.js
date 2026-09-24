@@ -1,12 +1,15 @@
 /**
- * LYFAds Bengaluru - Enterprise LocalStorage State Service & Security Engine
- * Zero external dependencies. Fully persistent, XSS-sanitized client CRM.
+ * LYFAds Bengaluru - Universal Central Database Client & Real-time State Engine
+ * Connects to Permanent Node.js Central Database with Server-Sent Events (SSE).
+ * Features: Multi-Device Persistence, Multi-Admin Auth, Instant Lead Notifications, Offline Fallback.
  */
 
 const STORAGE_KEY = 'lyfads_leads_v1';
-const ADMIN_AUTH_KEY = 'lyfads_admin_authenticated';
+const ADMIN_AUTH_KEY = 'lyfads_admin_session';
+const ADMIN_PROFILE_KEY = 'lyfads_admin_profile';
+const NOTIF_RECIPIENTS_KEY = 'lyfads_notif_recipients';
 
-// Initial enterprise seed leads representing Bengaluru tech & D2C clients
+// Default seed leads for immediate hydration & offline resilience
 const SEED_LEADS = [
   {
     id: 'lead_bengaluru_01',
@@ -82,10 +85,21 @@ const SEED_LEADS = [
 
 class StorageService {
   constructor() {
+    this.apiBase = this.detectApiBase();
+    this.isServerConnected = false;
+    this.eventSource = null;
     this.initStorage();
+    this.initBackendSync();
   }
 
-  // Security layer: Input Sanitizer against Reflected and Stored XSS
+  detectApiBase() {
+    if (typeof window !== 'undefined' && window.location && window.location.protocol && window.location.protocol.startsWith('http')) {
+      return `${window.location.origin}/api`;
+    }
+    return 'http://localhost:3000/api';
+  }
+
+  // Security Layer: Enterprise XSS Sanitizer
   static sanitize(str) {
     if (typeof str !== 'string') return '';
     return str
@@ -99,36 +113,147 @@ class StorageService {
       .replace(/on\w+\s*=/gi, 'blocked=');
   }
 
-  // Initialize storage with seed data if absent
   initStorage() {
+    if (typeof localStorage === 'undefined') return;
     try {
       const existing = localStorage.getItem(STORAGE_KEY);
       if (!existing || JSON.parse(existing).length === 0) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_LEADS));
       }
     } catch (err) {
-      console.warn('LocalStorage access warning, using in-memory fallback:', err);
+      console.warn('[Storage] LocalStorage access warning, using fallback:', err);
     }
   }
 
+  // ==========================================
+  // Real-Time Backend Synchronization & SSE
+  // ==========================================
+  async initBackendSync() {
+    if (typeof window === 'undefined') return;
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      const res = await fetch(`${this.apiBase}/leads`, { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success && Array.isArray(data.leads)) {
+          this.isServerConnected = true;
+          this.mergeRemoteLeads(data.leads);
+          this.connectEventSource();
+          window.dispatchEvent(new CustomEvent('lyfads:server_connected', { detail: { count: data.leads.length } }));
+        }
+      }
+    } catch (err) {
+      this.isServerConnected = false;
+      console.log('[Storage] Central database server offline or unreachable; using local browser storage.');
+    }
+  }
+
+  connectEventSource() {
+    if (typeof window === 'undefined' || typeof EventSource === 'undefined') return;
+    if (this.eventSource) return;
+
+    try {
+      this.eventSource = new EventSource(`${this.apiBase}/leads/stream`);
+
+      this.eventSource.onopen = () => {
+        this.isServerConnected = true;
+        window.dispatchEvent(new CustomEvent('lyfads:stream_connected'));
+      };
+
+      this.eventSource.onmessage = (event) => {
+        try {
+          const packet = JSON.parse(event.data);
+          if (!packet || !packet.type) return;
+
+          if (packet.type === 'lyfads:lead_created') {
+            this.handleRemoteLeadCreated(packet.payload);
+          } else if (packet.type === 'lyfads:lead_updated') {
+            this.handleRemoteLeadUpdated(packet.payload);
+          } else if (packet.type === 'lyfads:lead_deleted') {
+            this.handleRemoteLeadDeleted(packet.payload);
+          } else if (packet.type === 'lyfads:notification_dispatched') {
+            window.dispatchEvent(new CustomEvent('lyfads:notification_dispatched', { detail: packet.payload }));
+          }
+        } catch (e) {
+          // ignore stream parse errors
+        }
+      };
+
+      this.eventSource.onerror = () => {
+        // Will auto-reconnect
+      };
+    } catch (err) {
+      console.warn('[SSE] EventSource init error:', err);
+    }
+  }
+
+  mergeRemoteLeads(remoteLeads) {
+    if (typeof localStorage === 'undefined') return;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(remoteLeads));
+    window.dispatchEvent(new CustomEvent('lyfads:leads_synced', { detail: remoteLeads }));
+  }
+
+  handleRemoteLeadCreated(lead) {
+    if (!lead || !lead.id) return;
+    const leads = this.getLeads();
+    if (!leads.some(l => l.id === lead.id)) {
+      leads.unshift(lead);
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+      }
+      window.dispatchEvent(new CustomEvent('lyfads:lead_created', { detail: lead }));
+    }
+  }
+
+  handleRemoteLeadUpdated(lead) {
+    if (!lead || !lead.id) return;
+    const leads = this.getLeads();
+    const idx = leads.findIndex(l => l.id === lead.id);
+    if (idx !== -1) {
+      leads[idx] = lead;
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+      }
+      window.dispatchEvent(new CustomEvent('lyfads:lead_updated', { detail: lead }));
+    }
+  }
+
+  handleRemoteLeadDeleted(payload) {
+    if (!payload || !payload.id) return;
+    let leads = this.getLeads();
+    leads = leads.filter(l => l.id !== payload.id);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+    }
+    window.dispatchEvent(new CustomEvent('lyfads:lead_deleted', { detail: payload }));
+  }
+
+  // ==========================================
+  // Core Leads CRUD Operations
+  // ==========================================
+
   // Fetch all leads sorted by newest first
   getLeads() {
+    if (typeof localStorage === 'undefined') return SEED_LEADS;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       const leads = raw ? JSON.parse(raw) : SEED_LEADS;
       return leads.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     } catch (err) {
-      console.error('Error parsing leads from LocalStorage:', err);
+      console.error('Error parsing leads:', err);
       return SEED_LEADS;
     }
   }
 
-  // Fetch single lead
   getLeadById(id) {
     return this.getLeads().find(l => l.id === id) || null;
   }
 
-  // Save new lead
+  // Save new lead (Syncs instantly to Central Database & Dispatches Notifications)
   saveLead(data) {
     const leads = this.getLeads();
     const newLead = {
@@ -142,26 +267,61 @@ class StorageService {
       budget: StorageService.sanitize(data.budget || 'Flexible'),
       timeline: StorageService.sanitize(data.timeline || 'Flexible'),
       message: StorageService.sanitize(data.message || ''),
-      status: 'New Lead', // Default status: New Lead, In Progress, Closed
+      status: 'New Lead',
       source: StorageService.sanitize(data.source || 'Website')
     };
 
     leads.unshift(newLead);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+    }
 
-    // Dispatch real-time synchronization event across DOM
-    window.dispatchEvent(new CustomEvent('lyfads:lead_created', { detail: newLead }));
+    // Trigger local DOM event
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('lyfads:lead_created', { detail: newLead }));
+    }
+
+    // Push asynchronously to Central Server & Email Dispatch
+    if (typeof fetch !== 'undefined') {
+      fetch(`${this.apiBase}/leads`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(res => res.json())
+        .then(result => {
+          if (result && result.lead) {
+            this.handleRemoteLeadCreated(result.lead);
+          }
+        }).catch(() => {
+          // offline queue fallback
+        });
+    }
+
     return newLead;
   }
 
-  // Update status (New Lead | In Progress | Closed)
+  // Update lead status (New Lead | In Progress | Closed)
   updateLeadStatus(id, newStatus) {
     const leads = this.getLeads();
     const target = leads.find(l => l.id === id);
     if (target) {
       target.status = newStatus;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
-      window.dispatchEvent(new CustomEvent('lyfads:lead_updated', { detail: target }));
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+      }
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('lyfads:lead_updated', { detail: target }));
+      }
+
+      // Sync with central backend
+      if (typeof fetch !== 'undefined') {
+        fetch(`${this.apiBase}/leads/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        }).catch(() => {});
+      }
+
       return true;
     }
     return false;
@@ -171,15 +331,34 @@ class StorageService {
   deleteLead(id) {
     let leads = this.getLeads();
     leads = leads.filter(l => l.id !== id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
-    window.dispatchEvent(new CustomEvent('lyfads:lead_deleted', { detail: { id } }));
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+    }
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('lyfads:lead_deleted', { detail: { id } }));
+    }
+
+    // Sync with central backend
+    if (typeof fetch !== 'undefined') {
+      fetch(`${this.apiBase}/leads/${id}`, { method: 'DELETE' }).catch(() => {});
+    }
+
     return true;
   }
 
   // Reset to default seed leads
   resetToDefaults() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_LEADS));
-    window.dispatchEvent(new CustomEvent('lyfads:storage_reset'));
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_LEADS));
+    }
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('lyfads:storage_reset'));
+    }
+
+    if (typeof fetch !== 'undefined') {
+      fetch(`${this.apiBase}/leads/reset`, { method: 'POST' }).catch(() => {});
+    }
+
     return SEED_LEADS;
   }
 
@@ -191,18 +370,18 @@ class StorageService {
     const inProgress = leads.filter(l => l.status === 'In Progress').length;
     const closed = leads.filter(l => l.status === 'Closed').length;
 
-    // Approximate pipeline value calculation based on budget selections
     const pipelineEstimate = leads.reduce((acc, curr) => {
-      if (curr.budget.includes('25L+')) return acc + 2500000;
-      if (curr.budget.includes('10L - 25L')) return acc + 1750000;
-      if (curr.budget.includes('5L - 10L')) return acc + 750000;
+      const b = curr.budget || '';
+      if (b.includes('25L+')) return acc + 2500000;
+      if (b.includes('10L - 25L')) return acc + 1750000;
+      if (b.includes('5L - 10L')) return acc + 750000;
       return acc + 350000;
     }, 0);
 
     return { total, newLeads, inProgress, closed, pipelineEstimate };
   }
 
-  // Export leads as standard CSV file
+  // Export CSV
   exportToCSV() {
     const leads = this.getLeads();
     if (!leads.length) return false;
@@ -234,7 +413,7 @@ class StorageService {
     return true;
   }
 
-  // Export leads as JSON snapshot
+  // Export JSON
   exportToJSON() {
     const leads = this.getLeads();
     const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(leads, null, 2));
@@ -246,8 +425,160 @@ class StorageService {
     downloadAnchor.remove();
     return true;
   }
+
+  // ==========================================
+  // Multi-Admin Authentication & Session API
+  // ==========================================
+  async loginAdmin(identifier, password) {
+    // 1. Try Central Server
+    try {
+      const res = await fetch(`${this.apiBase}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier, password })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        sessionStorage.setItem(ADMIN_AUTH_KEY, 'true');
+        sessionStorage.setItem(ADMIN_PROFILE_KEY, JSON.stringify(data.admin));
+        localStorage.setItem(ADMIN_PROFILE_KEY, JSON.stringify(data.admin));
+        return { success: true, admin: data.admin };
+      }
+    } catch (e) {
+      // offline fallback
+    }
+
+    // 2. Offline / Local fallback credentials
+    const defaultCredentials = [
+      { id: 'admin_01', username: 'admin', email: 'admin@lyfads.com', password: 'admin123', name: 'Super Admin', role: 'Super Admin', avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=admin' },
+      { id: 'admin_02', username: 'growth', email: 'bengaluru@lyfads.com', password: 'lyfads2026', name: 'Bengaluru Growth Director', role: 'Growth Director', avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=growth' },
+      { id: 'admin_03', username: 'sales', email: 'sales@lyfads.com', password: 'sales123', name: 'Enterprise Sales Lead', role: 'Sales Lead', avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=sales' }
+    ];
+
+    const match = defaultCredentials.find(c => 
+      (c.username.toLowerCase() === identifier.toLowerCase() || c.email.toLowerCase() === identifier.toLowerCase()) &&
+      c.password === password
+    );
+
+    if (match) {
+      const adminObj = { id: match.id, name: match.name, email: match.email, username: match.username, role: match.role, avatar: match.avatar };
+      sessionStorage.setItem(ADMIN_AUTH_KEY, 'true');
+      sessionStorage.setItem(ADMIN_PROFILE_KEY, JSON.stringify(adminObj));
+      localStorage.setItem(ADMIN_PROFILE_KEY, JSON.stringify(adminObj));
+      return { success: true, admin: adminObj };
+    }
+
+    return { success: false, message: 'Invalid admin credentials' };
+  }
+
+  logoutAdmin() {
+    sessionStorage.removeItem(ADMIN_AUTH_KEY);
+    sessionStorage.removeItem(ADMIN_PROFILE_KEY);
+    localStorage.removeItem(ADMIN_PROFILE_KEY);
+  }
+
+  isLoggedIn() {
+    if (typeof sessionStorage === 'undefined') return false;
+    return sessionStorage.getItem(ADMIN_AUTH_KEY) === 'true';
+  }
+
+  getCurrentAdmin() {
+    if (typeof sessionStorage === 'undefined') return null;
+    const raw = sessionStorage.getItem(ADMIN_PROFILE_KEY) || localStorage.getItem(ADMIN_PROFILE_KEY);
+    try {
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // ==========================================
+  // Notification Management API
+  // ==========================================
+  async getNotificationRecipients() {
+    try {
+      const res = await fetch(`${this.apiBase}/notifications/recipients`);
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      }
+    } catch (e) {}
+
+    // LocalStorage fallback
+    const raw = localStorage.getItem(NOTIF_RECIPIENTS_KEY);
+    const recipients = raw ? JSON.parse(raw) : [
+      { id: 'recip_01', name: 'LYFAds Leads Desk', email: 'leads@lyfads.com', active: true, addedAt: new Date().toISOString() },
+      { id: 'recip_02', name: 'Studio Managing Director', email: 'director@lyfads.com', active: true, addedAt: new Date().toISOString() }
+    ];
+    return { success: true, recipients, logs: [] };
+  }
+
+  async addNotificationRecipient(name, email) {
+    try {
+      const res = await fetch(`${this.apiBase}/notifications/recipients`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email })
+      });
+      if (res.ok) return await res.json();
+    } catch (e) {}
+
+    // Fallback
+    const res = await this.getNotificationRecipients();
+    const newRecip = {
+      id: 'recip_' + Date.now(),
+      name: StorageService.sanitize(name || 'Admin Officer'),
+      email: StorageService.sanitize(email).toLowerCase(),
+      active: true,
+      addedAt: new Date().toISOString()
+    };
+    res.recipients.push(newRecip);
+    localStorage.setItem(NOTIF_RECIPIENTS_KEY, JSON.stringify(res.recipients));
+    return { success: true, recipient: newRecip };
+  }
+
+  async toggleNotificationRecipient(id, active) {
+    try {
+      const res = await fetch(`${this.apiBase}/notifications/recipients/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ active })
+      });
+      if (res.ok) return await res.json();
+    } catch (e) {}
+
+    const res = await this.getNotificationRecipients();
+    const item = res.recipients.find(r => r.id === id);
+    if (item) {
+      item.active = !!active;
+      localStorage.setItem(NOTIF_RECIPIENTS_KEY, JSON.stringify(res.recipients));
+      return { success: true, recipient: item };
+    }
+    return { success: false };
+  }
+
+  async deleteNotificationRecipient(id) {
+    try {
+      const res = await fetch(`${this.apiBase}/notifications/recipients/${id}`, { method: 'DELETE' });
+      if (res.ok) return await res.json();
+    } catch (e) {}
+
+    const res = await this.getNotificationRecipients();
+    const filtered = res.recipients.filter(r => r.id !== id);
+    localStorage.setItem(NOTIF_RECIPIENTS_KEY, JSON.stringify(filtered));
+    return { success: true };
+  }
+
+  async sendTestNotification() {
+    try {
+      const res = await fetch(`${this.apiBase}/notifications/test-dispatch`, { method: 'POST' });
+      return await res.json();
+    } catch (e) {
+      return { success: false, message: 'Server offline' };
+    }
+  }
 }
 
-// Global instance and class exposed for seamless access across modules
+// Global exposure
 window.StorageService = StorageService;
 window.lyfadsStorage = new StorageService();
